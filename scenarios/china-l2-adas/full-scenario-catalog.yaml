@@ -1,0 +1,494 @@
+# Chinese L2 CDA (Combined Driving Assistance) — FULL Scenario Catalog
+# Sources:
+#   1. GB XXXXX Safety Requirements (公开征求意见稿 2024-09) — Chapter 7 Field Tests
+#   2. GB/T XXXXX Part 1 — Single-Lane Manoeuvre Tests
+#   3. GB/T XXXXX Part 2 — Multi-Lane Manoeuvre Tests
+# Total: 45 test scenarios across 5 parts (A-E)
+# Extracted: 2026-04-06
+
+metadata:
+  standard_system: "智能网联汽车 组合驾驶辅助系统"
+  documents:
+    - {id: main, title: "安全要求 (Safety Requirements)", version: "公开征求意见稿 2024-09-10", type: "GB mandatory"}
+    - {id: part1, title: "技术要求及试验方法 第1部分：单车道行驶控制", type: "GB/T recommended"}
+    - {id: part2, title: "技术要求及试验方法 第2部分：多车道行驶控制", type: "GB/T recommended"}
+  total_scenarios: 45
+  functions_covered: [ACC, AEB, LKA, LDW, LCA, BSW, RCTA, ISA, DMS, RMF]
+
+# ============================================================
+# PART A: Single-Lane Control Tests (Part 1 Standard, 5 scenarios)
+# ============================================================
+part_a_single_lane:
+  - id: A1
+    name_cn: 无目标车辆试验
+    name_en: No-Target-Vehicle Test (LCC + ACC baseline)
+    clause: "Part1 6.4"
+    function: [LCC, ACC]
+    parameters:
+      speed_sequence: [30, 80, 60]  # km/h, step changes
+      hold_duration: 5  # s at each speed
+    pass_criteria: "Lateral distance to lane boundary = w/2 ± 0.3m"
+
+  - id: A2
+    name_cn: 目标车辆试验（跟车+切出响应）
+    name_en: Target-Vehicle Test (following + cut-out response)
+    clause: "Part1 6.5"
+    function: [ACC, LCC]
+    parameters:
+      sv_cruise: 30  # km/h
+      tv_speed: {value: 15, tolerance: 1, unit: km/h}
+      initial_gap: 100  # m
+      tv_cutout_lat_speed: {min: 0.5, unit: m/s}
+    pass_criteria: "Lateral ± 0.3m; decel ≤ 3.5 m/s² @≥72km/h, ≤5.0 m/s² @≤18km/h; steady THW ≥ 0.8s"
+    jama_mapping: "JAMA-SC-003 (cut-out)"
+
+  - id: A3
+    name_cn: 最大横向加速度试验
+    name_en: Maximum Lateral Acceleration Test (curve capability)
+    clause: "Part1 6.6"
+    function: LCC
+    parameters:
+      test_target: "0.3 m/s² above declared max lateral accel"
+    pass_criteria: "M1/N1: ≤ 3 m/s²; M2+: ≤ 2.5 m/s²; rate ≤ 5 m/s³"
+
+  - id: A4
+    name_cn: 脱手报警试验
+    name_en: Hands-Off Warning Test
+    clause: "Part1 6.7"
+    function: DMS
+    parameters:
+      speed: 60  # km/h
+      road: straight
+    pass_criteria: "Visual ≤ 15s; visual+acoustic ≤ 30s; deactivate ≤ 30s after acoustic"
+
+  - id: A5
+    name_cn: 驾驶员干预试验
+    name_en: Driver Override Test (steering)
+    clause: "Part1 6.8"
+    function: LCC
+    pass_criteria: "Override force ≤ 50 N"
+
+# ============================================================
+# PART B: Multi-Lane Control Tests (Part 2 Standard, 7 scenarios)
+# ============================================================
+part_b_multi_lane:
+  - id: B1
+    name_cn: 未激活单车道功能的换道试验
+    name_en: Lane Change Without Single-Lane Active (safety interlock)
+    clause: "Part2 6.5"
+    function: LCA
+    pass_criteria: "System shall NOT initiate lane change"
+    china_specific: true
+
+  - id: B2
+    name_cn: 激活单车道功能的换道试验
+    name_en: Lane Change With Single-Lane Active
+    clause: "Part2 6.6"
+    function: LCA
+    parameters:
+      preparation_phase: {min: 3, max: 5, unit: s}
+      execution_m1: {max: 5, unit: s}
+      execution_m2plus: {max: 10, unit: s}
+      turn_signal: "active throughout execution"
+    pass_criteria: "Complete within time; includes solid-line rejection test"
+
+  - id: B3
+    name_cn: 换道驾驶员干预试验
+    name_en: Driver Override During Lane Change
+    clause: "Part2 6.7"
+    function: LCA
+    pass_criteria: "Override force ≤ 50 N"
+
+  - id: B4
+    name_cn: 换道脱手报警试验
+    name_en: Hands-Off Warning During Lane Change
+    clause: "Part2 6.8"
+    function: [LCA, DMS]
+    sub_tests: 3  # a) hands-off then LC; b) LC before warning; c) LC then hands-off
+    china_specific: true
+
+  - id: B5
+    name_cn: 相邻车道电动两轮车换道安全响应
+    name_en: Adjacent Lane E-Bike Safety Response
+    clause: "Part2 6.9"
+    function: [LCA, VRU_detection]
+    parameters:
+      sv_speed: 30  # km/h
+      ebike_speed: 30  # km/h, same lane
+      rear_gap: {value: 3, tolerance: 0.5, unit: m}
+    pass_criteria: "System shall NOT enter LC execution phase"
+    china_specific: true
+    china_unique_reason: "E-bike prevalence in Chinese traffic"
+
+  - id: B6
+    name_cn: 相邻车道乘用车换道安全响应
+    name_en: Adjacent Lane Passenger Car Safety Response (rear approach)
+    clause: "Part2 6.10"
+    function: [LCA, BSW]
+    parameters:
+      test_matrix:
+        - {sv: 40, rear: 42, trigger_dist: 5}
+        - {sv: 40, rear: 60, trigger_dist: 15}
+        - {sv: 50, rear: 52, trigger_dist: 6}
+        - {sv: 50, rear: 70, trigger_dist: 16}
+      safety_formula: "Scritical = ΔV·tB + ΔV²/(2·a) + Vego·tG"
+    pass_criteria: "Cancel LC or complete only after rear safety distance met"
+    china_specific: true
+
+  - id: B7
+    name_cn: 行人安全响应试验
+    name_en: Pedestrian Safety Response During Lane Change
+    clause: "Part2 6.11"
+    function: [LCA, pedestrian_detection]
+    parameters:
+      sv_speed: 30  # km/h
+      pedestrian: "stationary adult dummy, 5m beyond LC completion"
+    pass_criteria: "No LC execution past pedestrian; or ≥ 1.0m lateral clearance"
+    china_specific: true
+
+# ============================================================
+# PART C: Safety Requirements — Field Tests (32 scenarios)
+# ============================================================
+part_c_field_tests:
+  # --- System baseline ---
+  - id: C1
+    name_cn: 预试验
+    name_en: Pre-Test (system stability baseline)
+    clause: "7.3"
+    function: all
+    parameters: {speed: Vsmaxset, duration: 30, unit: s}
+    pass_criteria: "Stable cruise for 30s on A-road and B-road"
+
+  # --- Speed & Recognition ---
+  - id: C2
+    name_cn: 限速识别与响应试验
+    name_en: Speed Limit Recognition Test (ISA)
+    clause: "7.4.1"
+    function: ISA
+    parameters:
+      speed_limits_tested: [100, 80, 60, 40]  # km/h
+      approach_distance: {min: 200, unit: m}
+    pass_criteria: "Recognize and respond to speed limit sign"
+    china_specific: true
+
+  - id: C3
+    name_cn: 车道巡航控制最大横向加速度试验
+    name_en: Max Lateral Acceleration in Curve (3 sub-tests)
+    clause: "7.4.2"
+    function: LCC
+    sub_tests:
+      - "80-90% of declared max → must traverse"
+      - "> declared + 0.3 m/s² → observe departure"
+      - "> 3 m/s² → observe departure"
+
+  # --- Lane Change Tests ---
+  - id: C4
+    name_cn: 驾驶员触发的换道试验
+    name_en: Driver-Triggered Lane Change
+    clause: "7.4.3"
+    function: LCA
+    tests: "1x left, 1x right, 1x toward solid line (must reject)"
+
+  - id: C5
+    name_cn: 驾驶员确认的换道试验
+    name_en: Driver-Confirmed Lane Change
+    clause: "7.4.4"
+    function: LCA
+    parameters:
+      slow_tv_speed: "Vsmaxset - 40 km/h"
+    pass_criteria: "Complete LC or follow slow TV for 20s"
+
+  - id: C6
+    name_cn: 系统触发的换道试验
+    name_en: System-Triggered Lane Change (autonomous)
+    clause: "7.4.5"
+    function: LCA
+    pass_criteria: "Autonomously complete LC or follow slow TV for 20s"
+    china_specific: true
+    china_unique_reason: "China mandates testing system-initiated LC"
+
+  - id: C7
+    name_cn: 相邻车道有干扰车辆的驾驶员触发换道
+    name_en: LC with Adjacent Vehicle (driver-triggered)
+    clause: "7.4.6.1"
+    function: [LCA, BSW]
+    parameters:
+      test_matrix:
+        - {sv: 40, delta_v: 2, trigger_dist: 5}
+        - {sv: 40, delta_v: 20, trigger_dist: 15}
+        - {sv: 50, delta_v: 2, trigger_dist: 6}
+        - {sv: 50, delta_v: 20, trigger_dist: 17}
+
+  - id: C8
+    name_cn: 驾驶员触发换道的车辆安全响应策略
+    name_en: LC Vehicle Safety Response (simultaneous LC conflict)
+    clause: "7.4.6.2"
+    function: LCA
+    parameters:
+      road: three_lane
+      scenario: "TV simultaneously changes toward same target lane"
+    pass_criteria: "No collision or lateral distance ≥ 1.5m"
+    china_specific: true
+
+  - id: C9
+    name_cn: 相邻车道有干扰车辆的驾驶员确认换道
+    name_en: LC with Adjacent Vehicle (driver-confirmed, blind spot)
+    clause: "7.4.6.3"
+    function: [LCA, BSW]
+    pass_criteria: "Follow slow TV 20s or no LC execution"
+
+  - id: C10
+    name_cn: 相邻车道有干扰车辆的系统触发换道
+    name_en: LC with Adjacent Vehicle (system-triggered, blind spot)
+    clause: "7.4.6.4"
+    function: [LCA, BSW]
+    pass_criteria: "No LC execution when blind spot occupied"
+
+  # --- Object Detection ---
+  - id: C11
+    name_cn: 直道侧翻车辆试验
+    name_en: Overturned Vehicle on Straight Road
+    clause: "7.4.6.5"
+    function: AEB
+    parameters:
+      target: "overturned vehicle perpendicular to lane, roof facing SV"
+      approach_distance: {min: 200, unit: m}
+      TTC_threshold: {M1: 1.0, other: 3.0, unit: s}
+    china_specific: true
+    china_unique_reason: "Overturned vehicle is not in JAMA/Euro NCAP"
+
+  - id: C12
+    name_cn: 车辆目标切入试验
+    name_en: Vehicle Cut-In Test
+    clause: "7.4.6.6"
+    function: [AEB, FCW]
+    parameters:
+      M1_TTC: 1.5  # s
+      N2N3_TTC: 4.0  # s
+      speed_delta: -50  # km/h (TV slower)
+      lat_accel: 1.5  # m/s²
+      lc_time: 3  # s
+    jama_mapping: "JAMA-SC-002 (CCRm cut-in)"
+
+  - id: C13
+    name_cn: 车辆目标切出试验
+    name_en: Vehicle Cut-Out Test (reveals stationary target)
+    clause: "7.4.6.7"
+    function: [AEB, FCW]
+    parameters:
+      TTC_to_static: 3.0  # s when moving TV cuts out
+      speed_delta: -20  # km/h (moving TV slower)
+    jama_mapping: "JAMA-SC-003 (CCRs cut-out)"
+
+  - id: C14
+    name_cn: 施工区域探测与响应能力试验
+    name_en: Construction Zone Detection
+    clause: "7.4.7"
+    function: combined
+    parameters:
+      road: four_lane_bidirectional
+      markers: "signs + cones + barriers per GB 5768.4"
+    china_specific: true
+
+  - id: C15
+    name_cn: 障碍物探测与响应能力试验
+    name_en: Obstacle Detection (cardboard box 50×50×50cm)
+    clause: "7.4.8"
+    function: AEB
+    parameters:
+      target: "brown cardboard box 50×50×50cm in lane center"
+      approach_distance: {min: 200, unit: m}
+    china_specific: true
+
+  # --- ODC Boundary Tests (China-unique) ---
+  - id: C16
+    name_cn: 车速边界识别与响应试验
+    name_en: Speed Boundary Recognition (ODC exit)
+    clause: "7.4.9.1"
+    function: ODC_monitoring
+    pass_criteria: "No activation above Vsmaxset; activate at Vsmaxset"
+    china_specific: true
+
+  - id: C17
+    name_cn: 车道边线边界识别与响应试验
+    name_en: Lane Marking Boundary Recognition (ODC exit)
+    clause: "7.4.9.2"
+    function: ODC_monitoring
+    pass_criteria: "Issue DCA when entering unmarked zone"
+    china_specific: true
+
+  - id: C18
+    name_cn: 雨天边界识别与响应试验
+    name_en: Rain Boundary Recognition (ODC exit)
+    clause: "7.4.9.3"
+    function: ODC_monitoring
+    parameters:
+      odd_levels:
+        - {level: 1, declared_range: "10-14.9mm/h", test_rainfall: "20mm/h ± 20%"}
+        - {level: 2, declared_range: "15-29.9mm/h", test_rainfall: "40mm/h ± 10%"}
+        - {level: 3, declared_range: "30-49.9mm/h", test_rainfall: "70mm/h ± 10%"}
+    china_specific: true
+    china_unique_reason: "No JAMA/Euro NCAP equivalent for weather ODC boundary"
+
+  - id: C19
+    name_cn: 雾天边界识别与响应试验
+    name_en: Fog Boundary Recognition (ODC exit)
+    clause: "7.4.9.4"
+    function: ODC_monitoring
+    parameters:
+      odd_levels:
+        - {level: 0, declared: "no fog", test_visibility: "350m ± 30%"}
+        - {level: 1, declared: "200-500m", test_visibility: "150m ± 30%"}
+        - {level: 2, declared: "100-200m", test_visibility: "75m ± 20%"}
+        - {level: 3, declared: "50-100m", test_visibility: "25m ± 20%"}
+    china_specific: true
+
+  # --- Driver Override Tests ---
+  - id: C20
+    name_cn: 转向盘干预试验-车道巡航
+    name_en: Steering Override Test (LCC)
+    clause: "7.4.10.1.1"
+    pass_criteria: "≤ 50N"
+
+  - id: C21
+    name_cn: 转向盘干预试验-换道
+    name_en: Steering Override Test (LCA)
+    clause: "7.4.10.1.2"
+    pass_criteria: "≤ 50N"
+
+  - id: C22
+    name_cn: 加速踏板干预试验
+    name_en: Accelerator Pedal Override
+    clause: "7.4.10.2"
+    pass_criteria: "System cedes longitudinal control"
+
+  - id: C23
+    name_cn: 制动踏板干预试验
+    name_en: Brake Pedal Override
+    clause: "7.4.10.3"
+    pass_criteria: "System cedes braking control"
+
+  # --- DMS Tests ---
+  - id: C24
+    name_cn: 手部脱离试验
+    name_en: Hands-Off Detection Test
+    clause: "7.4.10.4"
+    function: DMS
+    parameters:
+      subjects: 3  # age 18-60
+    china_specific: true
+
+  - id: C25
+    name_cn: 视线脱离试验
+    name_en: Eye-Gaze Detection Test
+    clause: "7.4.10.5"
+    function: DMS
+    pass_criteria: "EOR ≤ 5s; escalated ≤ 3s more; DCA ≤ 5s after escalated"
+    china_specific: true
+
+  - id: C26
+    name_cn: 手部脱离与视线同时脱离试验
+    name_en: Combined Distraction Test
+    clause: "7.4.10.6"
+    function: DMS
+    china_specific: true
+
+  - id: C27
+    name_cn: 多次手部脱离系统禁用试验
+    name_en: Multiple Hands-Off System Disable
+    clause: "7.4.10.7.1"
+    pass_criteria: "Disabled ≥ 30 min after 3 cycles"
+    china_specific: true
+
+  - id: C28
+    name_cn: 多次视线脱离系统禁用试验
+    name_en: Multiple Eyes-Off System Disable
+    clause: "7.4.10.7.2"
+    pass_criteria: "Disabled ≥ 30 min after 3 cycles"
+    china_specific: true
+
+  - id: C29
+    name_cn: 发出DCA后的系统禁用试验
+    name_en: DCA-Triggered System Disable
+    clause: "7.4.10.7.3"
+    pass_criteria: "Disabled ≥ 30 min after 2nd DCA"
+    china_specific: true
+
+  # --- RMF Tests (China-unique) ---
+  - id: C30
+    name_cn: 目标停车区域在本车道的RMF试验
+    name_en: RMF — Stop in Own Lane
+    clause: "7.4.11.1"
+    function: RMF
+    pass_criteria: "Vehicle safely stops in own lane"
+    china_specific: true
+    china_unique_reason: "China mandates MRM-equivalent field testing for L2"
+
+  - id: C31
+    name_cn: 目标停车区域在其他车道RMF-无干扰
+    name_en: RMF — Stop in Other Lane (no interference)
+    clause: "7.4.11.2.1"
+    function: RMF
+    china_specific: true
+
+  - id: C32
+    name_cn: 目标停车区域在其他车道RMF-有干扰
+    name_en: RMF — Stop in Other Lane (with adjacent traffic)
+    clause: "7.4.11.2.2"
+    function: RMF
+    pass_criteria: "No collision with interference vehicle"
+    china_specific: true
+
+# ============================================================
+# PART D: B-Road (Urban) Additional Tests (14 scenarios)
+# ============================================================
+part_d_b_road:
+  - {id: D1, name_cn: 环岛通行试验, name_en: "Roundabout Navigation", clause: "7.5.2", china_specific: true}
+  - {id: D2, name_cn: 信号灯识别与响应试验, name_en: "Traffic Light Recognition", clause: "7.5.3", china_specific: true}
+  - {id: D3, name_cn: 车辆目标弯道静止试验, name_en: "Vehicle in S-Curve Stationary", clause: "7.5.4.1", parameters: {left_R: 787, right_R: 374, unit: m}, china_specific: true}
+  - {id: D4, name_cn: 十字形交叉口冲突-车辆目标直行, name_en: "Intersection - Vehicle Straight (ego left turn)", clause: "7.5.4.2", china_specific: true}
+  - {id: D5, name_cn: 十字形交叉口冲突-车辆目标远端横穿, name_en: "Intersection - Vehicle Far-Side Crossing", clause: "7.5.4.3", china_specific: true}
+  - {id: D6, name_cn: 前方静止车辆+对向移动车辆, name_en: "Stationary Vehicle + Oncoming Traffic", clause: "7.5.4.4", china_specific: true}
+  - {id: D7, name_cn: 摩托车安全响应(换道), name_en: "Motorcycle Safety Response During LC", clause: "7.5.5.1", china_specific: true}
+  - {id: D8, name_cn: 摩托车目标弯道静止, name_en: "Motorcycle in S-Curve Stationary", clause: "7.5.5.2", china_specific: true}
+  - {id: D9, name_cn: 摩托车目标切入试验, name_en: "Motorcycle Cut-In", clause: "7.5.5.3", jama_mapping: "partial JAMA Annex B"}
+  - {id: D10, name_cn: 儿童目标换道安全响应, name_en: "Child Pedestrian LC Safety Response", clause: "7.5.6.1", china_specific: true}
+  - {id: D11, name_cn: 儿童目标弯道静止试验, name_en: "Child in S-Curve Stationary", clause: "7.5.6.2", china_specific: true}
+  - {id: D12, name_cn: 十字形交叉口-儿童远端穿行, name_en: "Intersection - Child Far-Side Crossing", clause: "7.5.6.3", jama_mapping: "JAMA CPFA/CPNA child"}
+  - {id: D13, name_cn: 自行车目标弯道静止探测, name_en: "Bicycle in S-Curve Stationary", clause: "7.5.7", jama_mapping: "JAMA CBLA/CBNA"}
+  - {id: D14, name_cn: B类道路施工区域探测, name_en: "B-Road Construction Zone", clause: "7.5.8", china_specific: true}
+
+# ============================================================
+# PART E: Open-Road Endurance Test (1 scenario)
+# ============================================================
+part_e_endurance:
+  - id: E1
+    name_cn: 道路试验（72小时耐久）
+    name_en: Open-Road Endurance Test (72h)
+    clause: "Chapter 8"
+    function: all
+    parameters:
+      total_duration: {min: 72, unit: h}
+      daytime: {min: 48, unit: h}
+      nighttime: {min: 24, unit: h}
+      a_road_elements: [curves_R400, grade_3_6pct, ramps, tunnels_100m]
+      b_road_elements: [curves_R_le_400, grade_gt_6pct, signalized_intersections, unsignalized_intersections, roundabouts, bike_lanes, bus_lanes]
+    china_specific: true
+    china_unique_reason: "No JAMA/Euro NCAP equivalent for 72h endurance requirement"
+
+# ============================================================
+# Cross-Reference: China vs JAMA V4.0
+# ============================================================
+cross_reference_summary:
+  total_cn_scenarios: 45
+  jama_mapped: 5  # C12, C13, A2, D9, D12, D13
+  china_unique: 40
+  key_china_differentiators:
+    - "ODC boundary tests (speed, lane marking, rain, fog) — C16-C19"
+    - "RMF/MRM field tests mandatory for L2 — C30-C32"
+    - "DMS hands-off + gaze + combined + system disable — C24-C29"
+    - "Construction zone + obstacle (box) + overturned vehicle — C11, C14, C15"
+    - "72h open-road endurance — E1"
+    - "E-bike + motorcycle specific scenarios — B5, D7-D9"
+    - "Rear safety distance formula during LC — B6"
+    - "System-triggered LC testing mandatory — C6"
