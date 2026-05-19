@@ -17,7 +17,7 @@ ADSafetyPilot is a domain-specific AI copilot for **autonomous driving safety en
 
 - **Safety Knowledge Engine**: Deep expertise in FuSa (ISO 26262), SOTIF (ISO 21448), and Cybersecurity (ISO 21434) — with a unique "Safety Trinity" integrated analysis approach
 - **China Regulatory Intelligence**: Full coverage of Chinese mandatory standards (GB 44495/44496, ADAS Safety Requirements) and development practices
-- **DFM Data Engine**: Scenario-specific human driving behavior baselines derived from 750h+ aerial naturalistic driving data (10.5M+ trajectories) via [DRIVEResearch](https://www.driveresearch.tech/)
+- **DFM Data Engine**: Scenario-specific human driving behavior baselines derived from 800h+ aerial naturalistic driving data (10.5M+ trajectories) via [DRIVEResearch](https://www.driveresearch.tech/)
 - **Scenario Library**: Standardized test scenarios aligned with JAMA V4.0 framework and Chinese L2/L3 mandatory standards
 
 ## Architecture
@@ -34,6 +34,10 @@ ADSafetyPilot
 │   ├── china-l2-adas/   # Chinese L2 ADAS mandatory test scenarios
 │   ├── china-l3-ads/    # GB 44495 L3 scenarios
 │   └── china-parking/   # GB 44496 parking scenarios
+├── evidence-packs/      # Scenario-to-evidence product packages
+│   └── cut-in-v0.1/     # First reusable Scenario Evidence Pack
+├── schemas/             # Evidence pack JSON schemas
+├── tools/               # Data processing and report generation tools
 ├── knowledge-base/      # Curated standards & references
 │   ├── standards/       # ISO/GB/SAE standards index
 │   ├── projects/        # PEGASUS, ENABLE-S3, SAKURA, PAXAS
@@ -61,13 +65,19 @@ Output: Gap analysis against GB ADAS Safety Requirements
         + Required test scenarios with pass/fail criteria
 ```
 
-### 3. DFM Behavioral Baselines (Coming Soon)
+### 3. Scenario Evidence Packs
 ```
-Input:  "Highway cut-in scenario, ego 100km/h"
-Output: Chinese driver behavior baselines:
-        TTC P5=2.8s, THW P50=1.62s, Lat.Acc P95=3.1m/s²
-        + SOTIF risk assessment against these baselines
+Input:  "Event-level cut-in data from DRIVEResearch"
+Output: Parameter distributions by speed bin:
+        P5 / P25 / P50 / P75 / P95 for TTC, THW, gap, speed, lateral speed
+        + SOTIF trigger-condition support
+        + test case candidates
+        + evidence gaps
 ```
+
+The first reusable pack is [cut-in-v0.1](evidence-packs/cut-in-v0.1/README.md). It is designed to turn what used to be a one-off analysis report into a repeatable data evidence package.
+
+A bilingual web presentation is available at [docs/evidence/cut-in-v01.html](docs/evidence/cut-in-v01.html) for customer-facing explanation of the evidence-pack value, data scope, outputs, and limitations.
 
 ### 4. Scenario-Driven Test Planning
 ```

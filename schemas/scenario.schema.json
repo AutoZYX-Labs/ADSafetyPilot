@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adsafetypilot.autozyx.com/schemas/scenario.schema.json",
+  "title": "ADSafetyPilot Scenario Evidence Scenario",
+  "type": "object",
+  "required": ["id", "version", "status", "scenario", "target_outputs"],
+  "properties": {
+    "id": {"type": "string"},
+    "version": {"type": "string"},
+    "status": {"type": "string"},
+    "scenario": {
+      "type": "object",
+      "required": ["canonical_id", "name_en", "type", "description", "core_parameters"],
+      "properties": {
+        "canonical_id": {"type": "string"},
+        "name_en": {"type": "string"},
+        "name_cn": {"type": "string"},
+        "type": {"type": "string"},
+        "description": {"type": "string"},
+        "operating_context": {"type": "object"},
+        "extraction_definition": {"type": "object"},
+        "core_parameters": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        }
+      }
+    },
+    "target_outputs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "customer_views": {"type": "object"}
+  }
+}

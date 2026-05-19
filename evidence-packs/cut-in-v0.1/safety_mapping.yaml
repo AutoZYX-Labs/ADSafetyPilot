@@ -1,0 +1,47 @@
+pack_id: ADSAFETY-EVP-CUTIN-001
+version: "0.1"
+status: draft
+mappings:
+  - id: CLAIM-CUTIN-SOTIF-001
+    claim_type: sotif_trigger_condition
+    claim: "Close-range cut-in is a reasonably foreseeable trigger condition for ACC/AEB/LKA performance limitations."
+    supported_by_metrics:
+      - longitudinal_gap_m
+      - ttc_s
+      - min_ttc_s
+      - thw_s
+      - relative_speed_kmh
+    evidence_sources:
+      - SRC-DRIVEREXPRESSWAY-CUTIN-20260416
+      - SRC-PATAC-CONVERGENCE-V1
+      - SRC-CUTIN-DEF-20210611
+    evidence_status: real_distribution_available_for_review
+  - id: CLAIM-CUTIN-TEST-001
+    claim_type: test_case_generation
+    claim: "Representative cut-in test points should be derived from percentile distributions within the same scenario type and speed bin."
+    supported_by_metrics:
+      - ego_speed_kmh
+      - cutin_speed_kmh
+      - longitudinal_gap_m
+      - lateral_speed_mps
+      - cutin_duration_s
+      - ttc_s
+      - min_ttc_s
+    evidence_sources:
+      - SRC-DRIVEREXPRESSWAY-CUTIN-20260416
+      - SRC-PATAC-CONVERGENCE-V1
+      - SRC-PT7-PERCENTILE-CONVERGENCE
+    evidence_status: real_distribution_available_for_review
+  - id: CLAIM-CUTIN-RISK-001
+    claim_type: risk_ranking
+    claim: "Cut-in risk ranking should use scenario-specific metrics instead of a single generic TTC threshold."
+    supported_by_metrics:
+      - ttc_s
+      - thw_s
+      - lateral_speed_mps
+      - cutin_angle_deg
+      - ego_max_decel_mps2
+    evidence_sources:
+      - SRC-DRIVEREXPRESSWAY-CUTIN-20260416
+      - SRC-PT9-RISK-OPX
+    evidence_status: real_distribution_available_for_review

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://autozyx.com/assets/favicon.png" type="image/png">
+  <title>Cut-in Evidence Pack v0.1 — ADSafetyPilot</title>
+  <meta name="description" content="A bilingual Scenario-to-Evidence demonstration for cut-in safety analysis, powered by DRIVEResearch naturalistic driving data.">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<a href="https://autozyx.com" class="autozyx-brand" title="返回 AutoZYX 主页">
+  <img src="https://autozyx.com/assets/avatar.png" alt="AutoZYX">
+  <span>AutoZYX</span>
+</a>
+
+<button class="lang-toggle" onclick="toggleLang()" aria-label="Toggle language">
+  <span class="cn">EN</span>
+  <span class="en">中文</span>
+</button>
+
+<header class="evidence-hero">
+  <div class="container evidence-hero-inner">
+    <a class="nav-back" href="../index.html">
+      <span class="cn">← 返回 ADSafetyPilot</span><span class="en">← Back to ADSafetyPilot</span>
+    </a>
+    <p class="evidence-kicker">
+      <span class="cn">Scenario Evidence Pack v0.1</span>
+      <span class="en">Scenario Evidence Pack v0.1</span>
+    </p>
+    <h1>
+      <span class="cn">把 cut-in 数据变成可审查的安全证据链</span>
+      <span class="en">Turning cut-in data into an auditable safety evidence chain</span>
+    </h1>
+    <p class="evidence-lead">
+      <span class="cn">ADSafetyPilot 的第一个证据包演示：从真实航测自然驾驶数据中提取 cut-in 场景，形成参数分布、收敛判断、证据缺口和测试用例候选。</span>
+      <span class="en">The first ADSafetyPilot evidence-pack demo: extracted cut-in events become parameter distributions, convergence checks, evidence gaps, and test-case candidates.</span>
+    </p>
+    <div class="evidence-actions">
+      <a class="btn" href="#results">
+        <span class="cn">查看结果</span><span class="en">View Results</span>
+      </a>
+      <a class="btn btn-outline" href="#deliverables">
+        <span class="cn">证据包包含什么</span><span class="en">What Is Included</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">为什么需要证据包</span>
+        <span class="en">Why This Matters</span>
+      </h2>
+      <div class="evidence-grid evidence-grid-3">
+        <article class="evidence-card">
+          <span class="eyebrow">01</span>
+          <h3><span class="cn">从报告交付到产品交付</span><span class="en">From reports to products</span></h3>
+          <p><span class="cn">过去的参数分析通常以一次性报告结束。证据包把数据、脚本、口径、图表和测试候选固化为可复用交付物。</span><span class="en">Traditional parameter studies often end as one-off reports. An evidence pack turns data, scripts, definitions, charts, and test candidates into a reusable product artifact.</span></p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">02</span>
+          <h3><span class="cn">从 AI 生成表格到数据支持结论</span><span class="en">From generated tables to data-backed claims</span></h3>
+          <p><span class="cn">AI 可以起草 HARA、SOTIF 和测试计划，但客户真正需要的是每个结论背后的数据依据、样本量和适用边界。</span><span class="en">AI can draft HARA, SOTIF, and test plans, but customers need the data basis, sample size, and applicability boundary behind each claim.</span></p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">03</span>
+          <h3><span class="cn">从单点参数到证据链</span><span class="en">From isolated values to evidence chains</span></h3>
+          <p><span class="cn">证据包保留从原始场景、导入脚本、质量过滤、分布结果到测试候选的链路，方便审查、复现和更新。</span><span class="en">The pack preserves the chain from raw scenarios, importer, quality filter, distribution outputs, and test candidates, making review and reproduction practical.</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">整体思路</span>
+        <span class="en">Evidence Flow</span>
+      </h2>
+      <div class="flow-strip" aria-label="Evidence flow">
+        <div class="flow-step"><span>1</span><p><span class="cn">自然驾驶数据</span><span class="en">Naturalistic data</span></p></div>
+        <div class="flow-step"><span>2</span><p><span class="cn">场景提取</span><span class="en">Scenario extraction</span></p></div>
+        <div class="flow-step"><span>3</span><p><span class="cn">参数分布</span><span class="en">Parameter distributions</span></p></div>
+        <div class="flow-step"><span>4</span><p><span class="cn">收敛与缺口</span><span class="en">Convergence and gaps</span></p></div>
+        <div class="flow-step"><span>5</span><p><span class="cn">测试候选</span><span class="en">Test candidates</span></p></div>
+        <div class="flow-step"><span>6</span><p><span class="cn">安全证据报告</span><span class="en">Evidence report</span></p></div>
+      </div>
+      <div class="evidence-note">
+        <p><span class="cn">关键差异不在于“AI 帮你写一个表”，而在于把真实驾驶行为数据连接到 SOTIF 触发条件、场景代表性和测试用例生成。</span><span class="en">The differentiator is not an AI-generated form. It is the connection from real driving behavior to SOTIF triggering conditions, scenario representativeness, and test-case generation.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="data">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">数据来源</span>
+        <span class="en">Data Source</span>
+      </h2>
+      <div class="evidence-grid evidence-grid-2">
+        <div class="evidence-panel">
+          <h3>DRIVEResearch</h3>
+          <p><span class="cn">证据包基于 <a href="https://www.driveresearch.tech/" target="_blank" rel="noopener">驭研科技 DRIVEResearch</a> 航测自然驾驶数据能力构建。当前 v0.1 演示使用一个城市快速路 cut-in 样本数据包。</span><span class="en">The pack is built on <a href="https://www.driveresearch.tech/" target="_blank" rel="noopener">DRIVEResearch</a> aerial naturalistic driving-data capabilities. This v0.1 demo uses one urban-expressway cut-in sample package.</span></p>
+          <dl class="fact-list">
+            <div><dt>800h+</dt><dd><span class="cn">航测视频积累</span><span class="en">aerial video corpus</span></dd></div>
+            <div><dt>10.5M+</dt><dd><span class="cn">交通参与者轨迹</span><span class="en">road-user trajectories</span></dd></div>
+            <div><dt>30 fps</dt><dd><span class="cn">当前场景工作簿帧率</span><span class="en">scenario workbook frame rate</span></dd></div>
+          </dl>
+        </div>
+        <div class="evidence-panel">
+          <h3><span class="cn">当前 v0.1 范围</span><span class="en">Current v0.1 Scope</span></h3>
+          <ul class="scope-list">
+            <li><span class="cn">场景类型：前车切入 cut-in</span><span class="en">Scenario type: cut-in</span></li>
+            <li><span class="cn">道路类型：城市快速路</span><span class="en">Road type: urban expressway</span></li>
+            <li><span class="cn">交通状态：拥堵交通</span><span class="en">Traffic state: congested traffic</span></li>
+            <li><span class="cn">公开状态：可公开展示，当前数据仅作为样本包</span><span class="en">Publication status: public demo; current data is a sample package</span></li>
+          </ul>
+          <p class="limit-copy"><span class="cn">这不是完整高速 cut-in ODD 声明，也不能保证所有参数已经收敛。它展示的是如何把一个真实样本包转成可审查的数据证据链。</span><span class="en">This is not a full highway cut-in ODD claim and does not guarantee convergence for all parameters. It demonstrates how one real sample package can become an auditable data evidence chain.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">成果产出</span>
+        <span class="en">Results</span>
+      </h2>
+      <div class="stats evidence-stats">
+        <div class="stat">
+          <span class="stat-number">1,389</span>
+          <span class="stat-label"><span class="cn">导入 cut-in 事件</span><span class="en">Imported cut-in events</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">580</span>
+          <span class="stat-label"><span class="cn">valid 样本</span><span class="en">valid samples</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">2</span>
+          <span class="stat-label"><span class="cn">可展示速度段</span><span class="en">usable speed bins</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">6</span>
+          <span class="stat-label"><span class="cn">测试候选</span><span class="en">test candidates</span></span>
+        </div>
+      </div>
+
+      <div class="evidence-grid evidence-grid-2 coverage-block">
+        <div class="chart-card">
+          <h3><span class="cn">速度段覆盖</span><span class="en">Speed-bin Coverage</span></h3>
+          <div class="bar-row">
+            <div class="bar-label"><span>0-40</span><small>6 valid / 30</small></div>
+            <div class="bar-track"><span style="width:3.5%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>40-60</span><small>270 valid / 853</small></div>
+            <div class="bar-track"><span style="width:31.7%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>60-80</span><small>294 valid / 496</small></div>
+            <div class="bar-track"><span style="width:59.3%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>80-100</span><small>10 valid / 10</small></div>
+            <div class="bar-track"><span style="width:100%"></span></div>
+          </div>
+          <p class="chart-caption"><span class="cn">`40-60` 和 `60-80` 是当前样本包中可展示的速度段；这不代表参数已充分收敛或覆盖完整 ODD。</span><span class="en">`40-60` and `60-80` are usable demonstration bins in this sample package; this does not mean the parameters are fully converged or cover the full ODD.</span></p>
+        </div>
+
+        <div class="chart-card">
+          <h3><span class="cn">质量过滤</span><span class="en">Quality Filter</span></h3>
+          <div class="donut-wrap">
+            <div class="donut" role="img" aria-label="580 valid and 809 review rows"></div>
+            <div class="donut-legend">
+              <p><span class="legend-dot valid"></span><strong>580</strong> <span class="cn">valid 样本进入分布</span><span class="en">valid rows used</span></p>
+              <p><span class="legend-dot review"></span><strong>809</strong> <span class="cn">review 样本保留审计</span><span class="en">review rows retained</span></p>
+            </div>
+          </div>
+          <p class="chart-caption"><span class="cn">`parameter_distribution.json` 使用 `sample_quality=valid`，避免把缺少参考帧 TTC/THW 的样本混入客户展示分布。</span><span class="en">`parameter_distribution.json` uses `sample_quality=valid`, keeping review rows out of customer-facing distributions.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">参数分布</span>
+        <span class="en">Parameter Distributions</span>
+      </h2>
+      <div class="table-wrap">
+        <table class="skill-table evidence-table">
+          <thead>
+            <tr>
+              <th><span class="cn">指标</span><span class="en">Metric</span></th>
+              <th><span class="cn">单位</span><span class="en">Unit</span></th>
+              <th>Speed bin</th>
+              <th>P10</th>
+              <th>P50</th>
+              <th>P95</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="cn">主车速度</span><span class="en">Ego speed</span></td><td>km/h</td><td>40-60</td><td>48.142</td><td>55.251</td><td>59.187</td></tr>
+            <tr><td><span class="cn">主车速度</span><span class="en">Ego speed</span></td><td>km/h</td><td>60-80</td><td>61.518</td><td>66.612</td><td>76.352</td></tr>
+            <tr><td><span class="cn">纵向距离</span><span class="en">Longitudinal gap</span></td><td>m</td><td>40-60</td><td>11.544</td><td>35.706</td><td>121.700</td></tr>
+            <tr><td><span class="cn">纵向距离</span><span class="en">Longitudinal gap</span></td><td>m</td><td>60-80</td><td>17.340</td><td>48.877</td><td>146.596</td></tr>
+            <tr><td><span class="cn">横向速度</span><span class="en">Lateral speed</span></td><td>m/s</td><td>40-60</td><td>0.167</td><td>0.397</td><td>0.782</td></tr>
+            <tr><td><span class="cn">横向速度</span><span class="en">Lateral speed</span></td><td>m/s</td><td>60-80</td><td>0.111</td><td>0.425</td><td>0.865</td></tr>
+            <tr><td><span class="cn">切入持续时间</span><span class="en">Cut-in duration</span></td><td>s</td><td>40-60</td><td>16.016</td><td>19.467</td><td>25.100</td></tr>
+            <tr><td><span class="cn">切入持续时间</span><span class="en">Cut-in duration</span></td><td>s</td><td>60-80</td><td>14.410</td><td>17.233</td><td>22.737</td></tr>
+            <tr><td><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></td><td>s</td><td>40-60</td><td>7.632</td><td>18.995</td><td>83.911</td></tr>
+            <tr><td><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></td><td>s</td><td>60-80</td><td>7.421</td><td>15.938</td><td>64.922</td></tr>
+            <tr><td><span class="cn">参考帧 THW</span><span class="en">Reference THW</span></td><td>s</td><td>40-60</td><td>0.744</td><td>2.497</td><td>7.975</td></tr>
+            <tr><td><span class="cn">参考帧 THW</span><span class="en">Reference THW</span></td><td>s</td><td>60-80</td><td>0.924</td><td>2.686</td><td>7.902</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note"><span class="cn">这些数值来自当前样本包的 valid-only 分布，用于展示证据链方法。它们不是最终收敛参数，也不应被解释为完整 ODD 的统计边界。</span><span class="en">Values come from the valid-only distribution of the current sample package. They demonstrate the evidence-chain method and should not be interpreted as final converged parameters or full-ODD statistical boundaries.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">收敛与证据缺口</span>
+        <span class="en">Convergence and Evidence Gaps</span>
+      </h2>
+      <div class="evidence-grid evidence-grid-2">
+        <div class="chart-card">
+          <h3><span class="cn">P10 收敛状态</span><span class="en">P10 Convergence Status</span></h3>
+          <div class="matrix">
+            <div class="matrix-head"></div><div class="matrix-head">40-60</div><div class="matrix-head">60-80</div>
+            <div><span class="cn">主车速度</span><span class="en">Ego speed</span></div><div class="status-good">0.237%</div><div class="status-good">0.147%</div>
+            <div><span class="cn">纵向距离</span><span class="en">Gap</span></div><div class="status-good">4.069%</div><div class="status-good">1.578%</div>
+            <div><span class="cn">横向速度</span><span class="en">Lateral speed</span></div><div class="status-good">4.342%</div><div class="status-warn">29.086%</div>
+            <div><span class="cn">持续时间</span><span class="en">Duration</span></div><div class="status-good">2.648%</div><div class="status-good">1.488%</div>
+            <div><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></div><div class="status-good">0.929%</div><div class="status-good">1.797%</div>
+            <div><span class="cn">THW</span><span class="en">THW</span></div><div class="status-warn">6.379%</div><div class="status-good">2.718%</div>
+          </div>
+          <p class="chart-caption"><span class="cn">规则：按输入顺序做 20 个累计分割，最后五个 P10 值波动小于 5% 视为收敛。</span><span class="en">Rule: 20 cumulative splits by input order; last-five P10 fluctuation below 5% is marked converged.</span></p>
+        </div>
+        <div class="chart-card">
+          <h3><span class="cn">需要主动说明的边界</span><span class="en">Limits to State Upfront</span></h3>
+          <ul class="gap-list">
+            <li><span class="cn">当前数据只是一个样本包，不是完整高速 cut-in ODD 覆盖。</span><span class="en">The current data is one sample package, not full highway cut-in ODD coverage.</span></li>
+            <li><span class="cn">页面中的参数用于展示方法，不能保证已经收敛。</span><span class="en">The parameters shown here demonstrate the method and are not guaranteed to be converged.</span></li>
+            <li><span class="cn">`0-40` 和 `80-100` 速度段样本不足，不能用于稳定分布声明。</span><span class="en">`0-40` and `80-100` bins have insufficient samples for stable distribution claims.</span></li>
+            <li><span class="cn">参考帧 TTC 在全量导入中缺失较多，v0.1 通过 valid-only 过滤处理。</span><span class="en">Reference-frame TTC has substantial missingness in the full import; v0.1 handles it through valid-only filtering.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="deliverables">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">证据包交付物</span>
+        <span class="en">Evidence-Pack Deliverables</span>
+      </h2>
+      <div class="deliverable-list">
+        <article class="deliverable">
+          <strong>parameter_distribution.json</strong>
+          <p><span class="cn">按速度段输出 P5/P10/P25/P50/P75/P95、样本数、缺失数和 P10 收敛状态。</span><span class="en">Percentiles, sample counts, missing counts, and P10 convergence status by speed bin.</span></p>
+        </article>
+        <article class="deliverable">
+          <strong>test_cases.yaml</strong>
+          <p><span class="cn">生成 representative、boundary、challenge 三类测试候选，并匹配真实 exemplar event。</span><span class="en">Representative, boundary, and challenge test candidates matched to real exemplar events.</span></p>
+        </article>
+        <article class="deliverable">
+          <strong>EVIDENCE_CHAIN.json</strong>
+          <p><span class="cn">记录 raw package manifest hash、artifact sha256 和生成命令，支持审计复现。</span><span class="en">Raw-package manifest hash, artifact SHA-256 values, and reproducibility commands.</span></p>
+        </article>
+        <article class="deliverable">
+          <strong>CUSTOMER_DEMO_SUMMARY.md</strong>
+          <p><span class="cn">公开演示摘要，说明样本范围、证据链价值，以及当前参数不能保证收敛的边界。</span><span class="en">A public demo summary covering sample scope, evidence-chain value, and the current parameter-convergence limits.</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">
+        <span class="cn">潜在应用</span>
+        <span class="en">Where It Can Be Used</span>
+      </h2>
+      <div class="evidence-grid evidence-grid-3">
+        <article class="evidence-card">
+          <h3><span class="cn">SOTIF 触发条件分析</span><span class="en">SOTIF triggering conditions</span></h3>
+          <p><span class="cn">用真实 cut-in 分布支持“合理可预见”触发条件和场景边界，而不是只依赖专家经验阈值。</span><span class="en">Use real cut-in distributions to support reasonably foreseeable triggering conditions and scenario boundaries.</span></p>
+        </article>
+        <article class="evidence-card">
+          <h3><span class="cn">测试用例生成</span><span class="en">Test-case generation</span></h3>
+          <p><span class="cn">从同一速度段内选择代表、边界和挑战工况，再匹配真实样本，减少不物理的参数拼接。</span><span class="en">Select representative, boundary, and challenge cases within the same speed bin, then match real exemplars.</span></p>
+        </article>
+        <article class="evidence-card">
+          <h3><span class="cn">NCAP / 准入 / 项目评审</span><span class="en">NCAP, access, and reviews</span></h3>
+          <p><span class="cn">为测试方案、评审材料和数据支撑报告提供可追溯的样本量、分布和适用边界。</span><span class="en">Provide traceable sample counts, distributions, and applicability boundaries for testing and assessment materials.</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <h2><span class="cn">下一步不是做更大的表，而是把证据链接到你的安全问题</span><span class="en">The next step is not a bigger table. It is connecting evidence to your safety question.</span></h2>
+        <p><span class="cn">如果你正在做 SOTIF、功能安全、测试评价、NCAP 或准入项目，ADSafetyPilot 可以把你的场景问题转成数据证据包、测试候选和审查材料。</span><span class="en">If you work on SOTIF, functional safety, testing, NCAP, or access projects, ADSafetyPilot can translate scenario questions into evidence packs, test candidates, and review-ready material.</span></p>
+        <div class="evidence-actions">
+          <a class="btn" href="mailto:yuxin.zhang@autozyx.com">
+            <span class="cn">联系讨论</span><span class="en">Start a Discussion</span>
+          </a>
+          <a class="btn btn-outline" href="https://github.com/AutoZYX/ADSafetyPilot" target="_blank" rel="noopener">
+            <span class="cn">查看项目</span><span class="en">View Project</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Yuxin Zhang &nbsp;|&nbsp; ADSafetyPilot</p>
+    <p style="margin-top: 6px;">
+      <a href="../index.html">ADSafetyPilot</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://autozyx.com" target="_blank" rel="noopener">autozyx.com</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var KEY = 'asplang';
+  var saved = localStorage.getItem(KEY);
+  if (saved === 'en') {
+    document.body.classList.add('E');
+  }
+})();
+
+function toggleLang() {
+  var KEY = 'asplang';
+  document.body.classList.toggle('E');
+  var isEn = document.body.classList.contains('E');
+  localStorage.setItem(KEY, isEn ? 'en' : 'cn');
+}
+</script>
+
+</body>
+</html>

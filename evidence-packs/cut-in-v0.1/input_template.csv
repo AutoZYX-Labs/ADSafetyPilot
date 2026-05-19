@@ -1,0 +1,1 @@
+event_id,source_id,road_type,city,speed_bin,overlap_type,ego_speed_kmh,cutin_speed_kmh,relative_speed_kmh,longitudinal_gap_m,lateral_speed_mps,cutin_angle_deg,cutin_duration_s,ttc_s,thw_s,min_ttc_s,min_thw_s,ego_max_decel_mps2,cutin_lateral_accel_mps2,sample_quality

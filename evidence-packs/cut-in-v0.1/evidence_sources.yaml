@@ -1,0 +1,60 @@
+pack_id: ADSAFETY-EVP-CUTIN-001
+version: "0.1"
+status: public_demo
+sources:
+  - id: SRC-DRIVEREXPRESSWAY-CUTIN-20260416
+    type: extracted_scenario_package
+    path: evidence-packs/cut-in-v0.1/raw/DRIVEResearch_expressway_1h_cutin_scenarios_20260416
+    relevance: Real DRIVEResearch cut-in scenario workbooks imported into input_events.csv.
+    confidence: high
+  - id: SRC-PATAC-CONVERGENCE-V1
+    type: planning_document
+    reference: 泛亚-结构化道路场景参数收敛计划V1
+    relevance: Defines four structured-road scenarios and percentile outputs.
+    confidence: high
+  - id: SRC-CUTIN-DEF-20210611
+    type: spreadsheet
+    reference: Cut-in Scenario & Parameter Definition_V0.2_20210611
+    relevance: Historical cut-in definition, key timepoints, and parameter dictionary.
+    confidence: high
+  - id: SRC-JAMA-SC-002
+    type: scenario_library
+    path: scenarios/jama-v4/traffic-disturbance-scenarios.yaml
+    relevance: ADSafetyPilot canonical cut-in scenario entry.
+    confidence: medium
+  - id: SRC-PT7-PERCENTILE-CONVERGENCE
+    type: patent_draft
+    reference: PT7 percentile convergence method draft
+    relevance: Percentile-based structured road scenario parameter convergence method.
+    confidence: internal_reference
+  - id: SRC-PT9-RISK-OPX
+    type: patent_draft
+    reference: PT9 risk scoring and OpenSCENARIO method draft
+    relevance: Cut-in risk scoring and OpenSCENARIO parameterization logic.
+    confidence: internal_reference
+data_requirements:
+  real_event_data_status: imported
+  required_next_input: "Clarify reference-frame TTC semantics before formal engineering use."
+  allowed_to_publish_values: true
+  note: "Values in parameter_distribution.json are generated from one real extracted sample package. They demonstrate the method and are not guaranteed to be converged."
+derived_artifacts:
+  - path: evidence-packs/cut-in-v0.1/input_events.csv
+    role: event_level_import
+  - path: evidence-packs/cut-in-v0.1/input_events_summary.json
+    role: import_summary
+  - path: evidence-packs/cut-in-v0.1/parameter_distribution.json
+    role: valid_only_parameter_distribution
+  - path: evidence-packs/cut-in-v0.1/test_cases.yaml
+    role: exemplar_matched_test_case_candidates
+  - path: evidence-packs/cut-in-v0.1/EVIDENCE_SUMMARY.md
+    role: evidence_review_summary
+  - path: evidence-packs/cut-in-v0.1/CUSTOMER_DEMO_SUMMARY.md
+    role: public_demo_summary
+  - path: evidence-packs/cut-in-v0.1/EVIDENCE_CHAIN.json
+    role: chain_of_custody_manifest
+data_compliance:
+  release_status: public_demo
+  interpretation_limits:
+    - current data is one sample package
+    - current parameters are not guaranteed to be converged
+    - current data does not represent full highway cut-in ODD coverage

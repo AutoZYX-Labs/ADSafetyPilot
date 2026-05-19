@@ -1,0 +1,74 @@
+id: ADSAFETY-EVP-CUTIN-001
+version: "0.1"
+status: real_data_imported_for_review
+scenario:
+  canonical_id: JAMA-SC-002
+  name_en: Highway cut-in
+  name_cn: 高速前车切入
+  type: cut-in
+  description: >
+    A vehicle from an adjacent lane laterally enters the ego lane in front of
+    the ego vehicle, creating a longitudinal and lateral interaction challenge
+    for ACC, AEB, LKA/LCC, and higher-level automated driving systems.
+  operating_context:
+    road_types:
+      - highway
+      - urban_expressway
+    ego_behavior: lane_keeping
+    other_vehicle_behavior: lane_change_into_ego_lane
+    speed_bins_kmh:
+      - "0-40"
+      - "40-60"
+      - "60-80"
+      - "80-100"
+      - "100-120"
+  extraction_definition:
+    source: DRIVEResearch historical cut-in definition workbook, 2021-06-11
+    normal_cut_in: "dx > 0 at T0 or T1"
+    overlap_cut_in: "dx <= 0 at T0 or T1"
+    key_timepoints:
+      T0: "Cut-in vehicle center deviates from lane centerline by 0.375 m for the last time."
+      T1: "Cut-in vehicle presses the lane marking for the last time."
+      T2: "Minimum dynamic TTC during the cut-in scenario."
+      T3: "Maximum ego deceleration during the cut-in scenario."
+      T4: "Cut-in vehicle crosses the lane marking for the first time."
+      T5: "Cut-in is complete; lateral offset difference is <= 0.10 m."
+  core_parameters:
+    - ego_speed_kmh
+    - cutin_speed_kmh
+    - relative_speed_kmh
+    - longitudinal_gap_m
+    - lateral_speed_mps
+    - cutin_angle_deg
+    - cutin_duration_s
+    - ttc_s
+    - thw_s
+    - min_ttc_s
+    - min_thw_s
+    - ego_max_decel_mps2
+current_dataset_scope:
+  source_package: DRIVEResearch_expressway_1h_cutin_scenarios_20260416
+  road_type: urban_expressway
+  city: Changchun
+  traffic_condition: congested
+  collection_time_period: "2025-08-02 07:21-08:41"
+  distribution_quality_filter: valid
+  usable_speed_bins_for_v0_1:
+    - "40-60"
+    - "60-80"
+  evidence_gap_speed_bins:
+    - "0-40"
+    - "80-100"
+  limitation: "Current data supports an urban-expressway cut-in evidence demo, not a full highway cut-in ODD claim."
+target_outputs:
+  - parameter_distribution
+  - evidence_gap_report
+  - test_case_candidates
+  - safety_mapping
+customer_views:
+  patac:
+    focus: "scenario parameter convergence and test case generation"
+  zhuoyu:
+    focus: "SOTIF trigger condition evidence and safety analysis support"
+  cmc:
+    focus: "assessment parameter basis and scenario representativeness"

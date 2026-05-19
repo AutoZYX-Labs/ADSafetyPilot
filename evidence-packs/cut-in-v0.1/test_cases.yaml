@@ -1,0 +1,420 @@
+pack_id: ADSAFETY-EVP-CUTIN-001
+version: "0.1"
+status: generated_exemplar_candidates
+generated_at: "2026-05-15T21:13:32.079771+00:00"
+source:
+  parameter_distribution: parameter_distribution.json
+  input_events: input_events.csv
+  speed_bins:
+    - "40-60"
+    - "60-80"
+  candidate_row_policy: "valid rows only"
+generation_policy:
+  percentile_targets: Use per-metric percentile targets within one speed bin.
+  exemplar_matching: Select the nearest real event row so the case remains physically consistent.
+  challenge_case: Use more demanding percentile bands without independently mixing impossible extremes.
+cases:
+  - id: "TC-CUTIN-4060-REP-001"
+    type: "representative"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "40-60"
+    description: "Representative cut-in behavior matched to the median region of the selected speed bin."
+    selected_event:
+      event_id: "DJI_20250802073554_0002_V::Ego_614_CutIn_472_Event1"
+      source_id: "DJI_20250802073554_0002_V"
+      source_file: "DJI_20250802073554_0002_V/ScenarioExtraction/cutin_scenarios/Ego_614_CutIn_472_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.048
+    percentile_policy:
+      ego_speed_kmh: P50
+      cutin_speed_kmh: P50
+      longitudinal_gap_m: P50
+      lateral_speed_mps: P50
+      cutin_duration_s: P50
+      min_ttc_s: P50
+      thw_s: P50
+    target_values:
+      ego_speed_kmh:
+        value: 55.251
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 51.386
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 35.706
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.397
+        unit: "m/s"
+      cutin_duration_s:
+        value: 19.467
+        unit: "s"
+      min_ttc_s:
+        value: 18.995
+        unit: "s"
+      thw_s:
+        value: 2.497
+        unit: "s"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 56.113
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 49.421
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 39.948
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.364
+        unit: "m/s"
+      cutin_duration_s:
+        value: 21.067
+        unit: "s"
+      min_ttc_s:
+        value: 17.413
+        unit: "s"
+      thw_s:
+        value: 2.563
+        unit: "s"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+  - id: "TC-CUTIN-4060-BOUNDARY-001"
+    type: "boundary"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "40-60"
+    description: "Boundary cut-in behavior near the lower gap / lower time-margin region."
+    selected_event:
+      event_id: "DJI_20250802080517_0002_V::Ego_3263_CutIn_3254_Event1"
+      source_id: "DJI_20250802080517_0002_V"
+      source_file: "DJI_20250802080517_0002_V/ScenarioExtraction/cutin_scenarios/Ego_3263_CutIn_3254_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.043
+    percentile_policy:
+      ego_speed_kmh: P50
+      cutin_speed_kmh: P50
+      longitudinal_gap_m: P10
+      lateral_speed_mps: P75
+      cutin_duration_s: P25
+      min_ttc_s: P10
+      thw_s: P10
+    target_values:
+      ego_speed_kmh:
+        value: 55.251
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 51.386
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 11.544
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.522
+        unit: "m/s"
+      cutin_duration_s:
+        value: 17.741
+        unit: "s"
+      min_ttc_s:
+        value: 7.632
+        unit: "s"
+      thw_s:
+        value: 0.744
+        unit: "s"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 56.711
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 53.636
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 12.383
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.487
+        unit: "m/s"
+      cutin_duration_s:
+        value: 16.467
+        unit: "s"
+      min_ttc_s:
+        value: 8.128
+        unit: "s"
+      thw_s:
+        value: 0.786
+        unit: "s"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+  - id: "TC-CUTIN-4060-CHALLENGE-001"
+    type: "challenge"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "40-60"
+    description: "High-risk cut-in behavior matched to small time margin, small gap, and high lateral demand."
+    selected_event:
+      event_id: "DJI_20250802073944_0003_V::Ego_1771_CutIn_1658_Event1"
+      source_id: "DJI_20250802073944_0003_V"
+      source_file: "DJI_20250802073944_0003_V/ScenarioExtraction/cutin_scenarios/Ego_1771_CutIn_1658_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.122
+    percentile_policy:
+      ego_speed_kmh: P75
+      longitudinal_gap_m: P10
+      lateral_speed_mps: P95
+      min_ttc_s: P10
+      thw_s: P10
+      ego_max_decel_mps2: P10
+      cutin_lateral_accel_mps2: P95
+    target_values:
+      ego_speed_kmh:
+        value: 57.317
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 11.544
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.782
+        unit: "m/s"
+      min_ttc_s:
+        value: 7.632
+        unit: "s"
+      thw_s:
+        value: 0.744
+        unit: "s"
+      ego_max_decel_mps2:
+        value: -1.204
+        unit: "m/s2"
+      cutin_lateral_accel_mps2:
+        value: 0.96
+        unit: "m/s2"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 55.721
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 7.39
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.877
+        unit: "m/s"
+      min_ttc_s:
+        value: 7.118
+        unit: "s"
+      thw_s:
+        value: 0.477
+        unit: "s"
+      ego_max_decel_mps2:
+        value: -1.33
+        unit: "m/s2"
+      cutin_lateral_accel_mps2:
+        value: 0.78
+        unit: "m/s2"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+      - CLAIM-CUTIN-RISK-001
+  - id: "TC-CUTIN-6080-REP-001"
+    type: "representative"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "60-80"
+    description: "Representative cut-in behavior matched to the median region of the selected speed bin."
+    selected_event:
+      event_id: "DJI_20250802073944_0003_V::Ego_2890_CutIn_2825_Event1"
+      source_id: "DJI_20250802073944_0003_V"
+      source_file: "DJI_20250802073944_0003_V/ScenarioExtraction/cutin_scenarios/Ego_2890_CutIn_2825_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.043
+    percentile_policy:
+      ego_speed_kmh: P50
+      cutin_speed_kmh: P50
+      longitudinal_gap_m: P50
+      lateral_speed_mps: P50
+      cutin_duration_s: P50
+      min_ttc_s: P50
+      thw_s: P50
+    target_values:
+      ego_speed_kmh:
+        value: 66.612
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 57.928
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 48.877
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.425
+        unit: "m/s"
+      cutin_duration_s:
+        value: 17.233
+        unit: "s"
+      min_ttc_s:
+        value: 15.938
+        unit: "s"
+      thw_s:
+        value: 2.686
+        unit: "s"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 68.501
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 56.149
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 61.508
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.352
+        unit: "m/s"
+      cutin_duration_s:
+        value: 16.367
+        unit: "s"
+      min_ttc_s:
+        value: 14.889
+        unit: "s"
+      thw_s:
+        value: 3.232
+        unit: "s"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+  - id: "TC-CUTIN-6080-BOUNDARY-001"
+    type: "boundary"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "60-80"
+    description: "Boundary cut-in behavior near the lower gap / lower time-margin region."
+    selected_event:
+      event_id: "DJI_20250802072938_0004_V::Ego_244_CutIn_229_Event1"
+      source_id: "DJI_20250802072938_0004_V"
+      source_file: "DJI_20250802072938_0004_V/ScenarioExtraction/cutin_scenarios/Ego_244_CutIn_229_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.021
+    percentile_policy:
+      ego_speed_kmh: P50
+      cutin_speed_kmh: P50
+      longitudinal_gap_m: P10
+      lateral_speed_mps: P75
+      cutin_duration_s: P25
+      min_ttc_s: P10
+      thw_s: P10
+    target_values:
+      ego_speed_kmh:
+        value: 66.612
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 57.928
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 17.34
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.592
+        unit: "m/s"
+      cutin_duration_s:
+        value: 15.833
+        unit: "s"
+      min_ttc_s:
+        value: 7.421
+        unit: "s"
+      thw_s:
+        value: 0.924
+        unit: "s"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 68.112
+        unit: "km/h"
+      cutin_speed_kmh:
+        value: 57.812
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 23.737
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.498
+        unit: "m/s"
+      cutin_duration_s:
+        value: 15.833
+        unit: "s"
+      min_ttc_s:
+        value: 9.246
+        unit: "s"
+      thw_s:
+        value: 1.254
+        unit: "s"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+  - id: "TC-CUTIN-6080-CHALLENGE-001"
+    type: "challenge"
+    status: ready_for_review
+    scenario_id: JAMA-SC-002
+    speed_bin: "60-80"
+    description: "High-risk cut-in behavior matched to small time margin, small gap, and high lateral demand."
+    selected_event:
+      event_id: "DJI_20250802082732_0003_V::Ego_3052_CutIn_2958_Event1"
+      source_id: "DJI_20250802082732_0003_V"
+      source_file: "DJI_20250802082732_0003_V/ScenarioExtraction/cutin_scenarios/Ego_3052_CutIn_2958_Event1.xlsx"
+      sample_quality: "valid"
+      match_score: 0.227
+    percentile_policy:
+      ego_speed_kmh: P75
+      longitudinal_gap_m: P10
+      lateral_speed_mps: P95
+      min_ttc_s: P10
+      thw_s: P10
+      ego_max_decel_mps2: P10
+      cutin_lateral_accel_mps2: P95
+    target_values:
+      ego_speed_kmh:
+        value: 70.839
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 17.34
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.865
+        unit: "m/s"
+      min_ttc_s:
+        value: 7.421
+        unit: "s"
+      thw_s:
+        value: 0.924
+        unit: "s"
+      ego_max_decel_mps2:
+        value: -1.519
+        unit: "m/s2"
+      cutin_lateral_accel_mps2:
+        value: 0.99
+        unit: "m/s2"
+    selected_event_values:
+      ego_speed_kmh:
+        value: 67.849
+        unit: "km/h"
+      longitudinal_gap_m:
+        value: 19.568
+        unit: "m"
+      lateral_speed_mps:
+        value: 0.739
+        unit: "m/s"
+      min_ttc_s:
+        value: 5.543
+        unit: "s"
+      thw_s:
+        value: 1.038
+        unit: "s"
+      ego_max_decel_mps2:
+        value: -1.14
+        unit: "m/s2"
+      cutin_lateral_accel_mps2:
+        value: 0.765
+        unit: "m/s2"
+    linked_claims:
+      - CLAIM-CUTIN-SOTIF-001
+      - CLAIM-CUTIN-TEST-001
+      - CLAIM-CUTIN-RISK-001

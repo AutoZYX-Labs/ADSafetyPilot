@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adsafetypilot.autozyx.com/schemas/parameter_distribution.schema.json",
+  "title": "ADSafetyPilot Parameter Distribution",
+  "type": "object",
+  "required": ["pack_id", "generated_from", "grouping", "metrics"],
+  "properties": {
+    "pack_id": {"type": "string"},
+    "generated_at": {"type": "string"},
+    "generated_from": {"type": "string"},
+    "source_row_count": {"type": "integer"},
+    "row_count": {"type": "integer"},
+    "quality_filter": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "quality_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer"}
+    },
+    "filtered_quality_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer"}
+    },
+    "input_missing_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer"}
+    },
+    "filtered_missing_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer"}
+    },
+    "grouping": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["unit", "groups"],
+        "properties": {
+          "unit": {"type": "string"},
+          "groups": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["count", "missing", "percentiles"],
+              "properties": {
+                "count": {"type": "integer"},
+                "missing": {"type": "integer"},
+                "percentiles": {
+                  "type": "object",
+                  "required": ["P5", "P10", "P25", "P50", "P75", "P95"],
+                  "properties": {
+                    "P5": {"type": ["number", "null"]},
+                    "P10": {"type": ["number", "null"]},
+                    "P25": {"type": ["number", "null"]},
+                    "P50": {"type": ["number", "null"]},
+                    "P75": {"type": ["number", "null"]},
+                    "P95": {"type": ["number", "null"]}
+                  },
+                  "additionalProperties": {"type": ["number", "null"]}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "convergence_check": {
+      "type": "object",
+      "properties": {
+        "group_by": {"type": "string"},
+        "rule": {"type": "string"},
+        "target_percentile": {"type": "string"},
+        "split_count": {"type": "integer"},
+        "threshold_percent": {"type": "number"},
+        "missing_speed_bin_rows": {"type": "integer"},
+        "bins": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "evidence_gaps": {
+      "type": "array",
+      "items": {"type": "object"}
+    }
+  }
+}

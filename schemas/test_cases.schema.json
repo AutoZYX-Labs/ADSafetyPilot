@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adsafetypilot.autozyx.com/schemas/test_cases.schema.json",
+  "title": "ADSafetyPilot Test Case Candidates",
+  "type": "object",
+  "required": ["pack_id", "version", "cases"],
+  "properties": {
+    "pack_id": {"type": "string"},
+    "version": {"type": "string"},
+    "status": {"type": "string"},
+    "generation_policy": {"type": "object"},
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "status", "scenario_id", "description", "parameter_source", "linked_claims"],
+        "properties": {
+          "id": {"type": "string"},
+          "type": {"type": "string"},
+          "status": {"type": "string"},
+          "scenario_id": {"type": "string"},
+          "description": {"type": "string"},
+          "parameter_source": {"type": "string"},
+          "percentile_policy": {"type": "object"},
+          "linked_claims": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}

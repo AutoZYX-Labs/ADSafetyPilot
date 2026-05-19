@@ -1,0 +1,111 @@
+{
+  "pack_id": "ADSAFETY-EVP-CUTIN-001",
+  "generated_at": "2026-05-19T14:00:39.810644+00:00",
+  "release_status": "public_demo",
+  "raw_package": {
+    "path": "raw",
+    "file_count": 1390,
+    "suffix_counts": {
+      ".jpg": 1,
+      ".xlsx": 1389
+    },
+    "manifest_sha256": "2d55312065627d82ac52fea8432073fc92eb32d6f27f000e0fe0c522dc40dec0"
+  },
+  "commands": [
+    {
+      "step": "import_raw_workbooks",
+      "command": "python3 tools/import_cutin_scenarios.py evidence-packs/cut-in-v0.1/raw/DRIVEResearch_expressway_1h_cutin_scenarios_20260416 evidence-packs/cut-in-v0.1/input_events.csv --summary-json evidence-packs/cut-in-v0.1/input_events_summary.json"
+    },
+    {
+      "step": "compute_valid_distribution",
+      "command": "python3 tools/compute_parameter_distribution.py evidence-packs/cut-in-v0.1/input_events.csv evidence-packs/cut-in-v0.1/parameter_distribution.json --quality-filter valid"
+    },
+    {
+      "step": "generate_test_cases",
+      "command": "python3 tools/generate_cutin_test_cases.py evidence-packs/cut-in-v0.1/parameter_distribution.json evidence-packs/cut-in-v0.1/input_events.csv evidence-packs/cut-in-v0.1/test_cases.yaml"
+    },
+    {
+      "step": "generate_evidence_summary",
+      "command": "python3 tools/generate_evidence_report.py evidence-packs/cut-in-v0.1"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "scenario.yaml",
+      "exists": true,
+      "size_bytes": 2456,
+      "sha256": "9fac8090ae43fad86a6da4bf7cce1a8ece0c149608503bf4b319727728d37e83"
+    },
+    {
+      "path": "PARAMETER_DICTIONARY.md",
+      "exists": true,
+      "size_bytes": 4258,
+      "sha256": "29265e914359b0f0526f6984ff7bf93146f2cf2e83042cadfb8b1b0a7cdd51d6"
+    },
+    {
+      "path": "QUALITY_AND_COMPLIANCE.md",
+      "exists": true,
+      "size_bytes": 2281,
+      "sha256": "583830b07cbccdfeabbe6dabca526bd75af705dbfe1fd49b31c3c181acc397f0"
+    },
+    {
+      "path": "input_events.csv",
+      "exists": true,
+      "size_bytes": 904869,
+      "sha256": "14fb534eafca5840af0c9e5ef5d9d8d9d9a8b0fd2619f5e145b0992b15008ef7"
+    },
+    {
+      "path": "input_events_summary.json",
+      "exists": true,
+      "size_bytes": 1433,
+      "sha256": "b74a2f9698f99681c0b6571e4c747b2362bc150158ede1635f7996d076a4c8e8"
+    },
+    {
+      "path": "parameter_distribution.json",
+      "exists": true,
+      "size_bytes": 220776,
+      "sha256": "8119a193c2ffb30f95bdb866374d6fa05172b866eea37256c42f4b104fd48bea"
+    },
+    {
+      "path": "test_cases.yaml",
+      "exists": true,
+      "size_bytes": 11182,
+      "sha256": "428e3798631320049b5a9dae48f09a61b9d46aa68bd65995f36df4726dd28fe5"
+    },
+    {
+      "path": "EVIDENCE_SUMMARY.md",
+      "exists": true,
+      "size_bytes": 5474,
+      "sha256": "e045ae9853759a72ace6de62353a1261736e5a8006e7da3601844092a6bf190a"
+    },
+    {
+      "path": "CUSTOMER_DEMO_SUMMARY.md",
+      "exists": true,
+      "size_bytes": 2621,
+      "sha256": "7e4d77401e3bde3d3aaf9bfeee3a7c4bf93bddab791c7b6143e2b81aadeca336"
+    },
+    {
+      "path": "safety_mapping.yaml",
+      "exists": true,
+      "size_bytes": 1615,
+      "sha256": "709ef83f130f6141d2f4135b9d6b76e0900429b3e50ea6928951c640de284ae2"
+    },
+    {
+      "path": "evidence_sources.yaml",
+      "exists": true,
+      "size_bytes": 2748,
+      "sha256": "75c5a2d65959eb03c7b3c25fcb9e4a5444300d767f604f9488c489bd2cc36cb1"
+    }
+  ],
+  "publication_policy": {
+    "allowed_to_publish_values": true,
+    "raw_package_committed": false,
+    "raw_package_reason": "Raw workbooks are kept outside the public repository because of size and update cadence."
+  },
+  "notes": [
+    "This is one real extracted sample package, not a full highway cut-in ODD claim.",
+    "Current parameters demonstrate the method and are not guaranteed to be converged.",
+    "Current distributions are valid-only.",
+    "Review rows remain in input_events.csv for audit but are excluded from parameter_distribution.json."
+  ]
+}

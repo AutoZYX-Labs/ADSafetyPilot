@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adsafetypilot.autozyx.com/schemas/safety_mapping.schema.json",
+  "title": "ADSafetyPilot Safety Mapping",
+  "type": "object",
+  "required": ["pack_id", "version", "mappings"],
+  "properties": {
+    "pack_id": {"type": "string"},
+    "version": {"type": "string"},
+    "status": {"type": "string"},
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "claim_type", "claim", "supported_by_metrics", "evidence_sources", "evidence_status"],
+        "properties": {
+          "id": {"type": "string"},
+          "claim_type": {"type": "string"},
+          "claim": {"type": "string"},
+          "supported_by_metrics": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "evidence_sources": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "evidence_status": {"type": "string"}
+        }
+      }
+    }
+  }
+}

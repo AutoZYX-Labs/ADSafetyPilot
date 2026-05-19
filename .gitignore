@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Large local source packages are kept out of the public repository.
+evidence-packs/*/raw/
