@@ -169,7 +169,7 @@
             <div class="bar-label"><span>80-100</span><small>10 valid / 10</small></div>
             <div class="bar-track"><span style="width:100%"></span></div>
           </div>
-          <p class="chart-caption"><span class="cn">`40-60` 和 `60-80` 是当前样本包中可展示的速度段；这不代表参数已充分收敛或覆盖完整 ODD。</span><span class="en">`40-60` and `60-80` are usable demonstration bins in this sample package; this does not mean the parameters are fully converged or cover the full ODD.</span></p>
+          <p class="chart-caption"><span class="cn">40-60 和 60-80 是当前样本包中可展示的速度段；这不代表参数已充分收敛或覆盖完整 ODD。</span><span class="en">40-60 and 60-80 are usable demonstration bins in this sample package; this does not mean the parameters are fully converged or cover the full ODD.</span></p>
         </div>
 
         <div class="chart-card">
@@ -181,47 +181,179 @@
               <p><span class="legend-dot review"></span><strong>809</strong> <span class="cn">review 样本保留审计</span><span class="en">review rows retained</span></p>
             </div>
           </div>
-          <p class="chart-caption"><span class="cn">`parameter_distribution.json` 使用 `sample_quality=valid`，避免把缺少参考帧 TTC/THW 的样本混入客户展示分布。</span><span class="en">`parameter_distribution.json` uses `sample_quality=valid`, keeping review rows out of customer-facing distributions.</span></p>
+          <p class="chart-caption"><span class="cn">parameter_distribution.json 使用 sample_quality=valid，避免把缺少参考帧 TTC/THW 的样本混入客户展示分布。</span><span class="en">parameter_distribution.json uses sample_quality=valid, keeping review rows out of customer-facing distributions.</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
+  <section id="parameter-distribution">
     <div class="container">
       <h2 class="section-title">
-        <span class="cn">参数分布</span>
-        <span class="en">Parameter Distributions</span>
+        <span class="cn">参数分布对比</span>
+        <span class="en">Parameter Distribution Comparison</span>
       </h2>
-      <div class="table-wrap">
-        <table class="skill-table evidence-table">
-          <thead>
-            <tr>
-              <th><span class="cn">指标</span><span class="en">Metric</span></th>
-              <th><span class="cn">单位</span><span class="en">Unit</span></th>
-              <th>Speed bin</th>
-              <th>P10</th>
-              <th>P50</th>
-              <th>P95</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><span class="cn">主车速度</span><span class="en">Ego speed</span></td><td>km/h</td><td>40-60</td><td>48.142</td><td>55.251</td><td>59.187</td></tr>
-            <tr><td><span class="cn">主车速度</span><span class="en">Ego speed</span></td><td>km/h</td><td>60-80</td><td>61.518</td><td>66.612</td><td>76.352</td></tr>
-            <tr><td><span class="cn">纵向距离</span><span class="en">Longitudinal gap</span></td><td>m</td><td>40-60</td><td>11.544</td><td>35.706</td><td>121.700</td></tr>
-            <tr><td><span class="cn">纵向距离</span><span class="en">Longitudinal gap</span></td><td>m</td><td>60-80</td><td>17.340</td><td>48.877</td><td>146.596</td></tr>
-            <tr><td><span class="cn">横向速度</span><span class="en">Lateral speed</span></td><td>m/s</td><td>40-60</td><td>0.167</td><td>0.397</td><td>0.782</td></tr>
-            <tr><td><span class="cn">横向速度</span><span class="en">Lateral speed</span></td><td>m/s</td><td>60-80</td><td>0.111</td><td>0.425</td><td>0.865</td></tr>
-            <tr><td><span class="cn">切入持续时间</span><span class="en">Cut-in duration</span></td><td>s</td><td>40-60</td><td>16.016</td><td>19.467</td><td>25.100</td></tr>
-            <tr><td><span class="cn">切入持续时间</span><span class="en">Cut-in duration</span></td><td>s</td><td>60-80</td><td>14.410</td><td>17.233</td><td>22.737</td></tr>
-            <tr><td><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></td><td>s</td><td>40-60</td><td>7.632</td><td>18.995</td><td>83.911</td></tr>
-            <tr><td><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></td><td>s</td><td>60-80</td><td>7.421</td><td>15.938</td><td>64.922</td></tr>
-            <tr><td><span class="cn">参考帧 THW</span><span class="en">Reference THW</span></td><td>s</td><td>40-60</td><td>0.744</td><td>2.497</td><td>7.975</td></tr>
-            <tr><td><span class="cn">参考帧 THW</span><span class="en">Reference THW</span></td><td>s</td><td>60-80</td><td>0.924</td><td>2.686</td><td>7.902</td></tr>
-          </tbody>
-        </table>
+      <div class="distribution-intro">
+        <p><span class="cn">每张卡片展示一个参数。横向条带表示 P10-P95 分位范围，圆点表示 P50；两行分别对应 40-60 与 60-80 两个速度段。</span><span class="en">Each card shows one parameter. The horizontal band marks the P10-P95 percentile range, and the dot marks P50; the two rows compare the 40-60 and 60-80 speed bins.</span></p>
+        <div class="distribution-legend" aria-label="Distribution chart legend">
+          <span><i class="legend-line bin-low"></i>40-60 km/h</span>
+          <span><i class="legend-line bin-high"></i>60-80 km/h</span>
+          <span><i class="legend-dot-mini"></i>P50</span>
+        </div>
       </div>
-      <p class="table-note"><span class="cn">这些数值来自当前样本包的 valid-only 分布，用于展示证据链方法。它们不是最终收敛参数，也不应被解释为完整 ODD 的统计边界。</span><span class="en">Values come from the valid-only distribution of the current sample package. They demonstrate the evidence-chain method and should not be interpreted as final converged parameters or full-ODD statistical boundaries.</span></p>
+
+      <div class="distribution-grid">
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">主车速度</span><span class="en">Ego speed</span></h3>
+              <p>km/h · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 76.352</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 48.142 · P50 55.251 · P95 59.187</span></div>
+            <div class="distribution-plot" aria-label="40-60 ego speed distribution">
+              <span class="distribution-range bin-low" style="left:63.1%;width:14.5%"></span>
+              <span class="distribution-median" style="left:72.4%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 61.518 · P50 66.612 · P95 76.352</span></div>
+            <div class="distribution-plot" aria-label="60-80 ego speed distribution">
+              <span class="distribution-range bin-high" style="left:80.6%;width:19.4%"></span>
+              <span class="distribution-median" style="left:87.2%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>76.352</span></div>
+        </article>
+
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">纵向距离</span><span class="en">Longitudinal gap</span></h3>
+              <p>m · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 146.596</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 11.544 · P50 35.706 · P95 121.700</span></div>
+            <div class="distribution-plot" aria-label="40-60 longitudinal gap distribution">
+              <span class="distribution-range bin-low" style="left:7.9%;width:75.1%"></span>
+              <span class="distribution-median" style="left:24.4%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 17.340 · P50 48.877 · P95 146.596</span></div>
+            <div class="distribution-plot" aria-label="60-80 longitudinal gap distribution">
+              <span class="distribution-range bin-high" style="left:11.8%;width:88.2%"></span>
+              <span class="distribution-median" style="left:33.3%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>146.596</span></div>
+        </article>
+
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">横向速度</span><span class="en">Lateral speed</span></h3>
+              <p>m/s · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 0.865</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 0.167 · P50 0.397 · P95 0.782</span></div>
+            <div class="distribution-plot" aria-label="40-60 lateral speed distribution">
+              <span class="distribution-range bin-low" style="left:19.3%;width:71.1%"></span>
+              <span class="distribution-median" style="left:45.9%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 0.111 · P50 0.425 · P95 0.865</span></div>
+            <div class="distribution-plot" aria-label="60-80 lateral speed distribution">
+              <span class="distribution-range bin-high" style="left:12.8%;width:87.2%"></span>
+              <span class="distribution-median" style="left:49.1%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>0.865</span></div>
+        </article>
+
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">切入持续时间</span><span class="en">Cut-in duration</span></h3>
+              <p>s · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 25.100</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 16.016 · P50 19.467 · P95 25.100</span></div>
+            <div class="distribution-plot" aria-label="40-60 cut-in duration distribution">
+              <span class="distribution-range bin-low" style="left:63.8%;width:36.2%"></span>
+              <span class="distribution-median" style="left:77.6%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 14.410 · P50 17.233 · P95 22.737</span></div>
+            <div class="distribution-plot" aria-label="60-80 cut-in duration distribution">
+              <span class="distribution-range bin-high" style="left:57.4%;width:33.2%"></span>
+              <span class="distribution-median" style="left:68.7%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>25.100</span></div>
+        </article>
+
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">最小 TTC</span><span class="en">Minimum TTC</span></h3>
+              <p>s · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 83.911</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 7.632 · P50 18.995 · P95 83.911</span></div>
+            <div class="distribution-plot" aria-label="40-60 minimum TTC distribution">
+              <span class="distribution-range bin-low" style="left:9.1%;width:90.9%"></span>
+              <span class="distribution-median" style="left:22.6%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 7.421 · P50 15.938 · P95 64.922</span></div>
+            <div class="distribution-plot" aria-label="60-80 minimum TTC distribution">
+              <span class="distribution-range bin-high" style="left:8.8%;width:68.5%"></span>
+              <span class="distribution-median" style="left:19.0%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>83.911</span></div>
+        </article>
+
+        <article class="distribution-card">
+          <header class="distribution-card-head">
+            <div>
+              <h3><span class="cn">参考帧 THW</span><span class="en">Reference THW</span></h3>
+              <p>s · n=270 / 294</p>
+            </div>
+            <strong><span class="cn">轴上限</span><span class="en">max</span> 7.975</strong>
+          </header>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>40-60</strong><span>P10 0.744 · P50 2.497 · P95 7.975</span></div>
+            <div class="distribution-plot" aria-label="40-60 reference THW distribution">
+              <span class="distribution-range bin-low" style="left:9.3%;width:90.7%"></span>
+              <span class="distribution-median" style="left:31.3%"></span>
+            </div>
+          </div>
+          <div class="distribution-row">
+            <div class="distribution-label"><strong>60-80</strong><span>P10 0.924 · P50 2.686 · P95 7.902</span></div>
+            <div class="distribution-plot" aria-label="60-80 reference THW distribution">
+              <span class="distribution-range bin-high" style="left:11.6%;width:87.5%"></span>
+              <span class="distribution-median" style="left:33.7%"></span>
+            </div>
+          </div>
+          <div class="distribution-axis"><span>0</span><span>7.975</span></div>
+        </article>
+      </div>
+      <p class="table-note"><span class="cn">同一张卡片内可比较条带长度和中位数位置；不同参数的横轴单位不同，不应跨卡片比较条带长度。这些数值来自当前样本包的 valid-only 分布，不代表最终收敛参数或完整 ODD 的统计边界。</span><span class="en">Compare band length and median position within the same card; axes differ by parameter, so band lengths should not be compared across cards. Values come from the valid-only distribution of the current sample package and are not final converged parameters or full-ODD statistical boundaries.</span></p>
     </div>
   </section>
 
@@ -250,7 +382,7 @@
           <ul class="gap-list">
             <li><span class="cn">当前数据只是一个样本包，不是完整高速 cut-in ODD 覆盖。</span><span class="en">The current data is one sample package, not full highway cut-in ODD coverage.</span></li>
             <li><span class="cn">页面中的参数用于展示方法，不能保证已经收敛。</span><span class="en">The parameters shown here demonstrate the method and are not guaranteed to be converged.</span></li>
-            <li><span class="cn">`0-40` 和 `80-100` 速度段样本不足，不能用于稳定分布声明。</span><span class="en">`0-40` and `80-100` bins have insufficient samples for stable distribution claims.</span></li>
+            <li><span class="cn">0-40 和 80-100 速度段样本不足，不能用于稳定分布声明。</span><span class="en">0-40 and 80-100 bins have insufficient samples for stable distribution claims.</span></li>
             <li><span class="cn">参考帧 TTC 在全量导入中缺失较多，v0.1 通过 valid-only 过滤处理。</span><span class="en">Reference-frame TTC has substantial missingness in the full import; v0.1 handles it through valid-only filtering.</span></li>
           </ul>
         </div>
