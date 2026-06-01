@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://autozyx.com/assets/favicon.png" type="image/png">
+  <title>商用车与乘用车典型挑战场景驾驶行为差异研究规划 — ADSafetyPilot</title>
+  <meta name="description" content="基于 DRIVEResearch 航测自然驾驶数据，研究商用车与乘用车在 cut-in、前车制动、前车切出等典型挑战场景中的驾驶行为差异，并转化为自动驾驶安全开发证据。">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<a href="https://autozyx.com" class="autozyx-brand" title="返回 AutoZYX 主页">
+  <img src="https://autozyx.com/assets/avatar.png" alt="AutoZYX">
+  <span>AutoZYX</span>
+</a>
+
+<header class="research-hero" style="--research-hero-image: url('../assets/research/commercial-vs-passenger-cutin-firstframe.jpg');">
+  <div class="container research-hero-inner">
+    <a class="nav-back research-nav-back" href="../index.html">← 返回 ADSafetyPilot</a>
+    <p class="evidence-kicker">Open Research Plan · DRIVEResearch × ADSafetyPilot</p>
+    <h1>商用车与乘用车典型挑战场景驾驶行为差异研究规划</h1>
+    <p class="research-hero-lead">
+      用自然驾驶数据回答一个很实际的问题：同样是被加塞、跟随前车制动、前车切出暴露障碍物，商用车驾驶员和乘用车驾驶员到底是不是在用同一套行为边界？
+    </p>
+    <div class="evidence-actions">
+      <a class="btn" href="#research-questions">研究问题</a>
+      <a class="btn btn-outline" href="#pilot-evidence">已有线索</a>
+      <a class="btn btn-outline" href="#workplan">执行路线</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="container">
+      <h2 class="section-title">一句话定义</h2>
+      <div class="research-thesis">
+        <p>
+          这项研究不是简单比较“商用车更保守还是乘用车更激进”，而是把商用车与乘用车的差异建成中国驾驶员基础模型中的一个可验证子模型：按车辆类型、驾驶视野、车辆动力学能力和场景簇上下文分层，输出可用于自动驾驶系统参数定义、系统设计、测试评价和场景生成的人类驾驶行为参考证据。
+        </p>
+      </div>
+      <div class="evidence-grid evidence-grid-3 research-kpi-row">
+        <article class="evidence-card">
+          <span class="eyebrow">Scenario Scope</span>
+          <h3>三个核心挑战场景</h3>
+          <p>旁车切入 cut-in、前车制动 lead-vehicle braking、前车切出并暴露前前车或障碍物 cut-out reveal。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Research Object</span>
+          <h3>两类人类参考行为</h3>
+          <p>乘用车驾驶员与商用车驾驶员，不只比较主车类型，也比较目标车类型、前车类型和前前车可见性。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Engineering Output</span>
+          <h3>从分布到证据</h3>
+          <p>输出 P5/P10/P50/P90/P95、收敛状态、场景簇标签、差异显著性、系统设计建议和 OpenSCENARIO 候选。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">为什么值得做</h2>
+      <div class="research-split">
+        <div>
+          <p class="research-copy">
+            现有自动驾驶安全开发里，“人类驾驶员参考行为”经常被当成一个整体使用。但商用车和乘用车差异很大：驾驶员职业属性不同，坐姿和视野高度不同，制动响应链路不同，车辆质量、轮胎、制动系统和最大减速度能力也不同。
+          </p>
+          <p class="research-copy">
+            更关键的是，商用车的高驾驶位可能改变驾驶员能看到的场景簇。当前车是乘用车时，商用车驾驶员可能提前看到前前车甚至更远车辆的制动、拥堵波和道路形态；当前车本身是大车时，这种优势又可能消失。这种“可见信息集合”的变化，不能只用目标车 TTC 一个指标解释。
+          </p>
+        </div>
+        <div class="research-side-note">
+          <h3>核心判断</h3>
+          <p>同一个 ISO 34502 / UNECE R157 场景，在不同车辆本体上可能对应不同的人类行为边界。安全阈值可以有统一底线，但拟人化、舒适性和测试代表性不应只有一套乘用车参数。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">已有研究资产吸收后的定位修正</h2>
+      <div class="evidence-grid evidence-grid-3">
+        <article class="evidence-card">
+          <span class="eyebrow">DFM</span>
+          <h3>不是单篇论文，而是驾驶员基础模型的一块拼图</h3>
+          <p>已有项目资料中的核心路线是：用航测大规模自然驾驶数据、公开标准法规和专家知识，构建中国驾驶员基础模型。商用车研究应成为其中“车辆本体差异”的专门模块。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Scenario Cluster</span>
+          <h3>从两车指标升级为多车上下文</h3>
+          <p>已有场景簇方案明确指出，传统“本车-单一交互车”关系会丢失复杂交互信息。商用车视野更高，恰好需要用场景簇而不是单一 TTC 来解释。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">SOTIF</span>
+          <h3>直接服务重卡和商用车安全开发</h3>
+          <p>L4 智能重卡资料强调 ODC 定义、SOTIF HARA、触发条件识别、整车级接受准则和仿真测试。这里的行为差异研究可以直接补上“人类参考能力模型”证据。</p>
+        </article>
+      </div>
+      <div class="research-side-note research-wide-note">
+        <h3>修正后的研究定位</h3>
+        <p>更准确的题目不是“商用车和乘用车驾驶行为差异统计”，而是“面向商用车自动驾驶安全开发的车辆类型特化人类驾驶行为参考模型”。统计分布只是第一层，最终要进入 DFM 查询、场景簇生成、SOTIF 触发条件和三类测试评价。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">研究假设</h2>
+      <div class="research-question-list">
+        <article class="research-question research-hypothesis">
+          <span>H1</span>
+          <h3>商用车不是简单“更保守”，而是响应策略不同</h3>
+          <p>商用车受车辆质量、制动建立时间和舒适性约束影响，可能倾向于更早预判、更低峰值减速度、更长制动持续时间，而不是在较晚时刻用更大减速度处理风险。</p>
+        </article>
+        <article class="research-question research-hypothesis">
+          <span>H2</span>
+          <h3>高驾驶位带来的收益取决于遮挡结构</h3>
+          <p>当前车是乘用车时，商用车主车可能提前观察到前前车或拥堵波；当前车是大车时，这一优势可能消失。因此视野收益应按前车类型、车高和道路几何分层。</p>
+        </article>
+        <article class="research-question research-hypothesis">
+          <span>H3</span>
+          <h3>场景簇变量可以解释单目标 TTC 的残差</h3>
+          <p>如果只看目标车 TTC，很多“为什么此时制动”解释不了；加入前前车、相邻车、后车压力、车道可用性和遮挡关系后，商用车与乘用车差异会更清晰。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="research-questions">
+    <div class="container">
+      <h2 class="section-title">研究问题</h2>
+      <div class="research-question-list">
+        <article class="research-question">
+          <span>RQ1</span>
+          <h3>应对加塞时，商用车与乘用车的最小减速度分布是否不同？</h3>
+          <p>按主车速度分箱、主车类型、切入车类型、交通密度和相对速度分层，比较最大制动减速度、制动起点、制动建立时间、jerk、最小 TTC 和最小 TTC 发生时刻。</p>
+        </article>
+        <article class="research-question">
+          <span>RQ2</span>
+          <h3>最小 TTC 是“同样危险”的指标吗？</h3>
+          <p>同样的 min TTC，对于商用车可能对应更早的预判、更低的峰值制动或更大的制动余量；对于乘用车可能对应更晚但更强的制动。需要比较 TTC 曲线形状，而不只是取一个最小值。</p>
+        </article>
+        <article class="research-question">
+          <span>RQ3</span>
+          <h3>前车制动时，高驾驶视野是否带来可测量的预判收益？</h3>
+          <p>比较前车开始制动、前前车开始制动、本车松油门、本车制动、达到最大减速度之间的时间差。如果商用车能提前看到前前车，则反应可能更早、更平缓。</p>
+        </article>
+        <article class="research-question">
+          <span>RQ4</span>
+          <h3>前车切出暴露障碍物时，视野优势什么时候成立？</h3>
+          <p>将 cut-out reveal 分成“前前车已可见”“前前车部分遮挡”“前前车完全遮挡”三类，分析本车首次响应时刻、障碍物 TTC、制动强度和是否存在提前减速。</p>
+        </article>
+        <article class="research-question">
+          <span>RQ5</span>
+          <h3>场景簇能否解释单目标指标解释不了的差异？</h3>
+          <p>构建包含目标车、前车、前前车、相邻车、后车、车道、匝道、拥堵波和遮挡关系的 scenario cluster，用多目标上下文解释驾驶员行为。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pilot-evidence">
+    <div class="container">
+      <h2 class="section-title">已有样本线索</h2>
+      <div class="evidence-note research-warning">
+        <p>下面结果来自现有 cut-in v0.1 样本包，只能作为研究设计线索，不能作为最终结论。当前商用车有效样本只有 50 条，其中 40-60 km/h 分箱 34 条、60-80 km/h 分箱 16 条，远低于每个场景 × 速度段建议 500 条的收敛目标。</p>
+      </div>
+
+      <div class="stats evidence-stats research-stats">
+        <div class="stat">
+          <span class="stat-number">1,389</span>
+          <span class="stat-label">cut-in 事件工作簿</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">154</span>
+          <span class="stat-label">商用车主车事件</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">50</span>
+          <span class="stat-label">商用车 valid 样本</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">1215</span>
+          <span class="stat-label">car → car 事件</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="skill-table evidence-table research-table">
+          <thead>
+            <tr>
+              <th>指标</th>
+              <th>乘用车主车 valid n=530</th>
+              <th>商用车主车 valid n=50</th>
+              <th>解释边界</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>主车速度 P50</td>
+              <td>61.27 km/h</td>
+              <td>55.72 km/h</td>
+              <td>商用车样本速度偏低，后续必须按速度分箱比较。</td>
+            </tr>
+            <tr>
+              <td>最大制动减速度 P50</td>
+              <td>-0.568 m/s²</td>
+              <td>-0.475 m/s²</td>
+              <td>商用车样本中位数更温和，但样本量不足。</td>
+            </tr>
+            <tr>
+              <td>min TTC P50</td>
+              <td>16.37 s</td>
+              <td>24.67 s</td>
+              <td>提示商用车可能更早保持风险余量，也可能只是样本构成差异。</td>
+            </tr>
+            <tr>
+              <td>最大制动发生位置 P50</td>
+              <td>切入过程 50.3%</td>
+              <td>切入过程 62.2%</td>
+              <td>商用车制动峰值更靠后这一线索值得验证。</td>
+            </tr>
+            <tr>
+              <td>min TTC 发生位置 P50</td>
+              <td>切入过程 61.1%</td>
+              <td>切入过程 62.6%</td>
+              <td>两类主车在 min TTC 时间点上接近，需结合 TTC 曲线形状分析。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-note">
+        现有工作簿已包含 `TTC_min_frame` 与 `Max_deacceration_frame`，下一步应将这些字段正式进入事件级 CSV，支持“最小 TTC 发生在整个过程哪个时间点”的规模化统计。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">场景簇分析框架</h2>
+      <div class="scenario-cluster">
+        <div class="cluster-node cluster-ego">Ego<br>主车</div>
+        <div class="cluster-node cluster-target">Target<br>目标车</div>
+        <div class="cluster-node cluster-lead">Lead<br>前车</div>
+        <div class="cluster-node cluster-front">Front-front<br>前前车</div>
+        <div class="cluster-node cluster-side">Adjacent<br>相邻车</div>
+        <div class="cluster-node cluster-rear">Rear<br>后车</div>
+        <div class="cluster-node cluster-road">Road / ODD<br>道路与环境</div>
+      </div>
+      <div class="evidence-grid evidence-grid-3">
+        <article class="evidence-card">
+          <span class="eyebrow">Layer 1</span>
+          <h3>触发目标层</h3>
+          <p>cut-in 车辆、制动前车、cut-out 后暴露的障碍物，是传统场景定义里的核心目标。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Layer 2</span>
+          <h3>周边动态层</h3>
+          <p>前前车、后车、相邻车、匝道汇入车辆和拥堵波，决定驾驶员是否有预判信息和避让空间。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Layer 3</span>
+          <h3>视野与遮挡层</h3>
+          <p>用车辆高度、前车类型、相对位置和道路几何估计“驾驶员可见场景簇”，这是商用车研究的关键增量。</p>
+        </article>
+      </div>
+      <div class="table-wrap research-cluster-table">
+        <table class="skill-table evidence-table research-table">
+          <thead>
+            <tr>
+              <th>场景簇维度</th>
+              <th>已有方案给出的初始口径</th>
+              <th>本研究中的商用车修正</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>视野维度</td>
+              <td>水平视野 120°-150°、垂直视野约 ±10°，仅保留可影响本车决策的车辆。</td>
+              <td>为商用车加入眼高、前车高度、遮挡比例和前前车可见时间，形成 vehicle-type-specific visibility proxy。</td>
+            </tr>
+            <tr>
+              <td>距离维度</td>
+              <td>同车道前车城市道路约 50 m、高速约 100 m；侧方约 25 m；后方约 50 m。</td>
+              <td>高速商用车应扩展前向观察窗口，并区分“可见但不直接交互”和“直接影响制动决策”的目标。</td>
+            </tr>
+            <tr>
+              <td>运动关联</td>
+              <td>相对速度差、车道关联性、交互车数量、车辆间距、运动速度和交互行为类型。</td>
+              <td>增加制动波传播、目标车类型、后车压力、相邻车道可用性，用于解释预判性制动或不制动。</td>
+            </tr>
+            <tr>
+              <td>结构化输出</td>
+              <td>按路段、本车 ID、工况输出本车和交互车轨迹、车道信息、静态场景关联 ID。</td>
+              <td>增加主车类型、目标车类型、可见性标签、T0-T5 时间点和驾驶响应模式，支撑统计与 OpenX 生成。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">指标体系</h2>
+      <div class="table-wrap">
+        <table class="skill-table evidence-table research-table">
+          <thead>
+            <tr>
+              <th>场景</th>
+              <th>核心时间点</th>
+              <th>行为指标</th>
+              <th>场景簇指标</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>应对加塞</td>
+              <td>T0 目标车横向意图出现；T1 触及车道线；T2 侵入本车道；T3 lane-change 完成；T4 ego 最大制动；T5 min TTC</td>
+              <td>max ego decel、decel onset、jerk、min TTC、TTC slope、THW、gap、cut-in lateral speed、relative speed</td>
+              <td>相邻车数量、后车压力、目标车前方可用空间、目标车类型、主车可换道空间</td>
+            </tr>
+            <tr>
+              <td>应对前车制动</td>
+              <td>T0 前前车制动；T1 前车制动；T2 ego 松油门；T3 ego 制动；T4 最大制动；T5 相对风险最低点</td>
+              <td>response delay、brake build-up time、peak decel、comfortable decel duration、min TTC、min THW、residual gap</td>
+              <td>前前车可见性、前车类型、制动波传播、车道可变道空间、道路曲率和坡度</td>
+            </tr>
+            <tr>
+              <td>应对前车切出</td>
+              <td>T0 前车开始横移；T1 障碍物首次可见；T2 前车离开车道中心；T3 ego 首次响应；T4 最大制动或变道；T5 min TTC</td>
+              <td>time-to-reveal、obstacle TTC at reveal、response mode、peak decel、steering response、residual clearance</td>
+              <td>障碍物类型、前车遮挡比例、主车眼高代理值、前前车提前可见时间、相邻车道可用性</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">统计路线</h2>
+      <div class="flow-strip research-flow" aria-label="Research workflow">
+        <div class="flow-step"><span>1</span><p>数据审计与车辆类型标注</p></div>
+        <div class="flow-step"><span>2</span><p>T0-T5 时间点统一定义</p></div>
+        <div class="flow-step"><span>3</span><p>速度分箱与 ODD 标签过滤</p></div>
+        <div class="flow-step"><span>4</span><p>分布、置信区间与收敛检查</p></div>
+        <div class="flow-step"><span>5</span><p>车辆类型差异显著性检验</p></div>
+        <div class="flow-step"><span>6</span><p>测试用例与系统设计映射</p></div>
+      </div>
+      <div class="evidence-grid evidence-grid-2">
+        <article class="evidence-panel">
+          <h3>分层原则</h3>
+          <ul class="scope-list">
+            <li>主车类型：乘用车、轻型商用车、重型货车、客车。</li>
+            <li>目标车类型：切入车、前车、障碍物或前前车的类型必须单独记录。</li>
+            <li>速度分箱：建议 0-20、20-40、40-60、60-80、80-100、100-120 km/h；样本不足时合并但保留原始分箱。</li>
+            <li>道路与交通：高速、城市快速路、匝道、曲线、拥堵、自由流分别分析。</li>
+          </ul>
+        </article>
+        <article class="evidence-panel">
+          <h3>判定原则</h3>
+          <ul class="scope-list">
+            <li>每个场景 × 速度段 × 主车类型，目标有效样本数不低于 500。</li>
+            <li>使用 bootstrap 置信区间，避免只看单个百分位。</li>
+            <li>使用 KS test、Mann-Whitney U、Cliff's delta 或分位数回归判断差异大小。</li>
+            <li>收敛采用累计样本 80%-100% 区间内 P5/P10 波动小于 5% 的规则，并输出未收敛原因。</li>
+          </ul>
+        </article>
+      </div>
+      <div class="evidence-panel research-panel-margin">
+        <h3>DFM 数据产品口径</h3>
+        <p>统计结果不应只以论文表格存在，而应沉淀为可查询的数据产品：用户可以问“60-80 km/h 城市快速路中，商用车主车被乘用车 cut-in 时，P10 最大减速度、P10 min TTC 和制动峰值发生位置是多少”，系统返回数值、样本量、分箱、收敛状态和适用边界。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">面向自动驾驶开发的转化</h2>
+      <div class="deliverable-list">
+        <div class="deliverable">
+          <strong>参数定义</strong>
+          <p>为不同车辆本体提供人类参考的 TTC、THW、gap、max decel、jerk、response delay 和 comfortable decel 分布，而不是把乘用车分布直接套到商用车自动驾驶系统。</p>
+        </div>
+        <div class="deliverable">
+          <strong>系统设计</strong>
+          <p>把商用车高视野与制动能力约束转成感知前向范围、前前车跟踪、遮挡推理、规划提前量和制动建立时间要求。</p>
+        </div>
+        <div class="deliverable">
+          <strong>测试用例生成</strong>
+          <p>用真实分布生成 representative、boundary、challenge 三类测试候选；challenge 不等于随意极限化，而是从 P5/P10 或事故分布边界中抽样。</p>
+        </div>
+        <div class="deliverable">
+          <strong>SOTIF 证据链</strong>
+          <p>将“触发条件”从单一目标车参数扩展为场景簇触发条件，例如“乘用车前车切出且前前车为静止车辆、商用车主车因视野高度提前可见”的可审查证据。</p>
+        </div>
+        <div class="deliverable">
+          <strong>三类测评映射</strong>
+          <p>把结果分别映射到强制标准安全测评、拟人化测评和基于事故数据的风险场景测评。前者需要安全底线，第二类需要安心感、舒适性和效率，第三类需要判断事故是否属于人类也难以避免的极端场景。</p>
+        </div>
+        <div class="deliverable">
+          <strong>DFM 查询接口</strong>
+          <p>将每个场景簇、指标分布和测试候选变成可检索对象，服务未来的中国驾驶员基础模型、RAG 问答、Trajectory-to-Language 和 OpenSCENARIO 自动生成。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workplan">
+    <div class="container">
+      <h2 class="section-title">执行路线</h2>
+      <div class="table-wrap">
+        <table class="skill-table evidence-table research-table">
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>周期</th>
+              <th>任务</th>
+              <th>可交付物</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>WP0</td>
+              <td>2 周</td>
+              <td>统一车辆类型、时间点、字段字典、脱敏边界、内部资料引用边界和质量规则。</td>
+              <td>metric dictionary、schema、quality checklist、source coverage note。</td>
+            </tr>
+            <tr>
+              <td>WP1</td>
+              <td>4 周</td>
+              <td>完成 cut-in 商用车 vs 乘用车扩样分析。</td>
+              <td>cut-in comparative evidence pack、收敛矩阵、首版网页。</td>
+            </tr>
+            <tr>
+              <td>WP2</td>
+              <td>6 周</td>
+              <td>扩展到前车制动和前车切出，补齐 T0-T5 与 TTC 曲线指标。</td>
+              <td>braking / cut-out evidence pack、OpenSCENARIO 候选。</td>
+            </tr>
+            <tr>
+              <td>WP3</td>
+              <td>6 周</td>
+              <td>构建 scenario cluster、可见性代理模型和交互车筛选策略。</td>
+              <td>场景簇提取脚本、可见性标签、遮挡分类结果、交互车筛选校准报告。</td>
+            </tr>
+            <tr>
+              <td>WP4</td>
+              <td>4 周</td>
+              <td>形成商用车自动驾驶开发建议、三类测评映射和 DFM 查询原型。</td>
+              <td>系统设计建议、测试用例库、DFM demo query、论文初稿。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">建议论文方向</h2>
+      <div class="evidence-grid evidence-grid-3">
+        <article class="evidence-card">
+          <span class="eyebrow">Paper 1</span>
+          <h3>车辆类型特化的人类驾驶行为参考模型</h3>
+          <p>围绕 cut-in 场景，证明商用车与乘用车的人类响应边界是否存在统计显著差异。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Paper 2</span>
+          <h3>面向商用车自动驾驶的场景簇方法</h3>
+          <p>从单目标 TTC 扩展到多车可见性和遮挡关系，解释高驾驶视角下的预判行为。</p>
+        </article>
+        <article class="evidence-card">
+          <span class="eyebrow">Paper 3</span>
+          <h3>从自然驾驶分布到测试用例生成</h3>
+          <p>把 P5-P95、收敛检查、场景簇标签和 OpenSCENARIO 连接成可复现证据链。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">资料基础与参考</h2>
+      <div class="research-reference-grid">
+        <article class="domain-card">
+          <h3>数据与项目资料</h3>
+          <ul class="scope-list">
+            <li>ADSafetyPilot cut-in v0.1 evidence pack：1389 个 cut-in 事件、580 条 valid 样本、速度分箱和收敛检查。</li>
+            <li>AD Safety Pioneer 项目资料：关键场景数据库、智能重卡 SOTIF、中国驾驶员基础模型、人类驾驶行为研究价值分析。</li>
+            <li>DRIVEResearch 项目资料：2026H1 研究规划、场景簇提取讨论、轨迹数据-场景提取-OpenX 链路、场景泛化生成和数据平台标签体系。</li>
+            <li>既有研究沉淀：危险场景指标提取、典型场景定义、场景文件格式说明、AD4CHE/highD/SinD 参考材料。</li>
+          </ul>
+        </article>
+        <article class="domain-card">
+          <h3>公开研究与标准</h3>
+          <ul class="scope-list">
+            <li><a href="https://www.iso.org/standard/78951.html" target="_blank" rel="noopener">ISO 34502:2022</a>：ADS 场景化安全评价框架。</li>
+            <li><a href="https://unece.org/transport/documents/2021/03/standards/un-regulation-no-157-automated-lane-keeping-systems-alks" target="_blank" rel="noopener">UNECE R157</a>：ALKS 典型交通扰动场景和性能要求。</li>
+            <li><a href="https://arxiv.org/abs/1810.05642" target="_blank" rel="noopener">highD dataset</a>：德国高速航测自然驾驶轨迹，16.5h、110k 车辆、5600 次完整换道。</li>
+            <li><a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/166195/preprint_pdf/de68e3c5d0c727fa1c79e2a3bf3f3e5b.pdf" target="_blank" rel="noopener">AD4CHE</a>：中国拥堵高速与快速路航测数据集，面向 cut-in、cut-out、前车减速等场景。</li>
+            <li><a href="https://trid.trb.org/View/1437323" target="_blank" rel="noopener">Naturalistic Study of Truck Following Behavior</a>：重卡跟车行为、切入影响和 headway 基线。</li>
+            <li><a href="https://arxiv.org/abs/2108.05710" target="_blank" rel="noopener">Heavy vehicle vs passenger car lane-change duration</a>：HighD 上重型车与乘用车换道时长差异。</li>
+            <li><a href="https://www.mdpi.com/2079-9292/8/4/453" target="_blank" rel="noopener">Vehicle-type dependent car-following model</a>：前车类型会影响跟车行为与 ADAS 策略。</li>
+            <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0968090X18308635" target="_blank" rel="noopener">Shanghai Naturalistic Driving Study</a>：中国快速路跟车行为与驾驶员差异。</li>
+            <li><a href="https://research.chalmers.se/en/publication/545082" target="_blank" rel="noopener">Human benchmark model validation</a>：R157 人类基准模型仍需用真实安全关键事件验证。</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card research-cta">
+        <h2>开放这个研究想法，是为了让更多人拿着真实问题往前走。</h2>
+        <p>
+          如果你在做商用车自动驾驶、SOTIF、场景测试、自然驾驶数据分析，欢迎基于这个规划继续拆解问题、复现实验、提出新的假设。数据集可以开放，研究思路也应该开放；真正有价值的不是把题目攥在手里，而是让更多人把问题做深。
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Yuxin Zhang &nbsp;|&nbsp; ADSafetyPilot Open Research</p>
+    <p style="margin-top: 6px;">
+      <a href="../index.html">ADSafetyPilot</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/AutoZYX/ADSafetyPilot" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://driveresearch.tech/" target="_blank" rel="noopener">DRIVEResearch</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
