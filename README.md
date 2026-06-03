@@ -71,6 +71,7 @@ Input:  "Event-level cut-in data from DRIVEResearch"
 Output: Parameter distributions by speed bin:
         P5 / P25 / P50 / P75 / P95 for TTC, THW, gap, speed, lateral speed
         + SOTIF trigger-condition support
+        + L4 no-human-fallback review fields when relevant
         + test case candidates
         + evidence gaps
 ```
@@ -78,6 +79,8 @@ Output: Parameter distributions by speed bin:
 The first reusable pack is [cut-in-v0.1](evidence-packs/cut-in-v0.1/README.md). It is designed to turn what used to be a one-off analysis report into a repeatable data evidence package.
 
 A bilingual web presentation is available at [docs/evidence/cut-in-v01.html](docs/evidence/cut-in-v01.html) for customer-facing explanation of the evidence-pack value, data scope, outputs, and limitations.
+
+For L4 programs, ADSafetyPilot now records a narrow no-human-fallback review layer in `safety_mapping`: `no_human_controller`, `fallback_credit`, `policy_coverage_gap`, and `field_monitoring_evidence`. This is an internal evidence-gap design, not an ASIL E compliance claim. See [L4 No-Human-Fallback Evidence Fields](docs/design/l4-no-human-fallback-evidence-fields.md).
 
 ### 4. Scenario-Driven Test Planning
 ```

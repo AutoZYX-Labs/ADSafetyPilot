@@ -45,3 +45,26 @@ mappings:
       - SRC-DRIVEREXPRESSWAY-CUTIN-20260416
       - SRC-PT9-RISK-OPX
     evidence_status: real_distribution_available_for_review
+  - id: CLAIM-CUTIN-L4-NOFALLBACK-001
+    claim_type: l4_no_human_fallback_review
+    claim: "Current cut-in v0.1 evidence supports scenario parameterization and test-case generation, but does not claim L4 no-human-fallback sufficiency."
+    no_human_controller: false
+    fallback_credit:
+      credited_actor: in_vehicle_driver
+      claim: "The current v0.1 pack is a scenario-evidence demo for cut-in analysis and does not evaluate a driverless L4 fallback claim."
+      time_budget_ms: null
+      evidence_status: not_applicable_for_current_pack
+      evidence_required: []
+    policy_coverage_gap:
+      status: not_applicable
+      open_policy_space: []
+      residual_rate_basis: not_assessed_for_current_cut_in_pack
+      evidence_required: []
+    field_monitoring_evidence:
+      required: false
+      current_sources: []
+      feedback_loop: []
+      evidence_status: not_applicable_for_current_pack
+    supported_by_metrics: []
+    evidence_sources: []
+    evidence_status: l4_no_human_fallback_not_claimed

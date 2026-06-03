@@ -91,6 +91,8 @@ The current v0.1 output target is a folder containing:
 - `CUSTOMER_DEMO_SUMMARY.md`: public demo summary that states the current data is one sample package and does not guarantee parameter convergence.
 - `EVIDENCE_CHAIN.json`: generated chain-of-custody manifest with artifact hashes.
 
+L4 note: `safety_mapping.yaml` includes no-human-fallback fields (`no_human_controller`, `fallback_credit`, `policy_coverage_gap`, `field_monitoring_evidence`) so the same evidence-pack format can flag driverless-system evidence gaps. The current cut-in v0.1 pack does not claim L4 no-human-fallback sufficiency.
+
 ## Acceptance criteria for v0.1
 
 1. One cut-in CSV can be processed without manual spreadsheet work.

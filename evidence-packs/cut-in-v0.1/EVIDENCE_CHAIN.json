@@ -1,6 +1,6 @@
 {
   "pack_id": "ADSAFETY-EVP-CUTIN-001",
-  "generated_at": "2026-05-19T14:00:39.810644+00:00",
+  "generated_at": "2026-05-22T03:10:20.248699+00:00",
   "release_status": "public_demo",
   "raw_package": {
     "path": "raw",
@@ -87,8 +87,8 @@
     {
       "path": "safety_mapping.yaml",
       "exists": true,
-      "size_bytes": 1615,
-      "sha256": "709ef83f130f6141d2f4135b9d6b76e0900429b3e50ea6928951c640de284ae2"
+      "size_bytes": 2634,
+      "sha256": "f466a81ed06db940c62ba28881e7968b358f6817a4d03c826f031fed93e5d043"
     },
     {
       "path": "evidence_sources.yaml",

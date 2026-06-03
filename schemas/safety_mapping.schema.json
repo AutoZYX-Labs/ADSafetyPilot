@@ -17,6 +17,62 @@
           "id": {"type": "string"},
           "claim_type": {"type": "string"},
           "claim": {"type": "string"},
+          "no_human_controller": {
+            "type": "boolean",
+            "description": "True when the safety case does not credit an in-vehicle human driver or remote human controller for immediate hazard avoidance."
+          },
+          "fallback_credit": {
+            "type": "object",
+            "description": "Explicit statement of any credited fallback actor and evidence status for the fallback assumption.",
+            "properties": {
+              "credited_actor": {
+                "type": "string",
+                "enum": ["none", "in_vehicle_driver", "remote_operator", "remote_assistant", "field_staff", "infrastructure", "mixed"]
+              },
+              "claim": {"type": "string"},
+              "time_budget_ms": {"type": ["number", "integer", "null"]},
+              "evidence_status": {"type": "string"},
+              "evidence_required": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          },
+          "policy_coverage_gap": {
+            "type": "object",
+            "description": "Policy-layer coverage status for scenarios where perception may be correct but the driving policy may not cover the operational situation.",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["not_applicable", "not_assessed", "partial", "bounded", "closed"]
+              },
+              "open_policy_space": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "residual_rate_basis": {"type": "string"},
+              "evidence_required": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          },
+          "field_monitoring_evidence": {
+            "type": "object",
+            "description": "Operational evidence sources and feedback loops needed to keep the safety case current during L4 deployment.",
+            "properties": {
+              "required": {"type": "boolean"},
+              "current_sources": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "feedback_loop": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "evidence_status": {"type": "string"}
+            }
+          },
           "supported_by_metrics": {
             "type": "array",
             "items": {"type": "string"}
