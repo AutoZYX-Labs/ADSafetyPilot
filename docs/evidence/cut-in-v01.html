@@ -12,16 +12,16 @@
     <meta property="og:url" content="https://adsafetypilot.autozyx.com/evidence/cut-in-v01.html">
     <meta name="twitter:card" content="summary_large_image">
   <meta name="description" content="A bilingual Scenario-to-Evidence demonstration for cut-in safety analysis, powered by DRIVEResearch naturalistic driving data.">
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/style.css?v=2">
 </head>
 <body>
 
-<a href="https://autozyx.com" class="autozyx-brand" title="返回 AutoZYX 主页">
+<a href="https://autozyx.com" class="autozyx-brand" data-auto-hide-nav title="返回 AutoZYX 主页">
   <img src="https://autozyx.com/assets/avatar.png" alt="AutoZYX">
   <span>AutoZYX</span>
 </a>
 
-<button class="lang-toggle" onclick="toggleLang()" aria-label="Toggle language">
+<button class="lang-toggle" data-auto-hide-nav onclick="toggleLang()" aria-label="Toggle language">
   <span class="cn">EN</span>
   <span class="en">中文</span>
 </button>
@@ -491,6 +491,7 @@ function toggleLang() {
   localStorage.setItem(KEY, isEn ? 'en' : 'cn');
 }
 </script>
+<script src="../assets/auto-nav.js?v=1"></script>
 
 </body>
 </html>

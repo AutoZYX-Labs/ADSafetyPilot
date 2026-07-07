@@ -12,17 +12,17 @@
     <meta property="og:url" content="https://adsafetypilot.autozyx.com/">
     <meta name="twitter:card" content="summary_large_image">
   <meta name="description" content="智能驾驶安全开发助手: Safety Knowledge + China Standards + Real Driving Data. FuSa, SOTIF, CyberSec integrated.">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=2">
 </head>
 <body>
 
-<a href="https://autozyx.com" class="autozyx-brand" title="返回 AutoZYX 主页">
+<a href="https://autozyx.com" class="autozyx-brand" data-auto-hide-nav title="返回 AutoZYX 主页">
   <img src="https://autozyx.com/assets/avatar.png" alt="AutoZYX">
   <span>AutoZYX</span>
 </a>
 
 <!-- Language Toggle -->
-<button class="lang-toggle" onclick="toggleLang()">
+<button class="lang-toggle" data-auto-hide-nav onclick="toggleLang()">
   <span class="cn">EN</span>
   <span class="en">中文</span>
 </button>
@@ -320,6 +320,7 @@ function toggleLang() {
   localStorage.setItem(KEY, isEn ? 'en' : 'cn');
 }
 </script>
+<script src="assets/auto-nav.js?v=1"></script>
 
 </body>
 </html>
